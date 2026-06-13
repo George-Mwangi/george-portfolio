@@ -266,3 +266,5 @@ Then add the Plausible script to `src/app/layout.tsx`:
 ## 📄 License
 
 Private — all rights reserved by Joan Mwangi.
+#   j o a n - p o r t f o l i o  
+ 
