@@ -57,8 +57,16 @@ export function Footer({ profile }: { profile: Profile | null }) {
         </div>
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <p>© {year} Joan Mwangi. All rights reserved.</p>
-          <p className="flex items-center gap-1.5">Built with <Heart className="w-3 h-3 text-primary fill-primary" /> in Kenya</p>
-          <Link href="/admin/login" className="opacity-40 hover:opacity-100 hover:text-primary transition-all">Admin</Link>
+<a
+  href="https://george-mwangi.github.io/Portfolio/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex items-center gap-1.5 hover:text-primary transition-colors"
+>
+  Built with{" "}
+  <Heart className="w-3 h-3 text-primary fill-primary" />{" "}
+  in Kenya by George
+</a>          <Link href="/admin/login" className="opacity-40 hover:opacity-100 hover:text-primary transition-all">Admin</Link>
         </div>
       </div>
     </footer>
