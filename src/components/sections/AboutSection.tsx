@@ -1,4 +1,6 @@
 'use client'
+export const dynamic = 'force-dynamic'
+
 
 import { motion } from 'motion/react'
 import { Award, Users, TrendingUp, Star, Building2 } from 'lucide-react'

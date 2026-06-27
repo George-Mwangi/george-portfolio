@@ -1,4 +1,6 @@
 'use client'
+export const dynamic = 'force-dynamic'
+
 import { useState } from 'react'
 import { Plus, Trash2, Save, X, Building2 } from 'lucide-react'
 import toast from 'react-hot-toast'

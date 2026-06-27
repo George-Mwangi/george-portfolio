@@ -1,4 +1,6 @@
 'use client'
+export const dynamic = 'force-dynamic'
+
 
 import { motion } from 'motion/react'
 import { Building2, Globe, ExternalLink } from 'lucide-react'

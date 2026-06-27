@@ -1,4 +1,6 @@
 'use client'
+export const dynamic = 'force-dynamic'
+
 import { useState } from 'react'
 import { CheckCircle2, XCircle, Eye, EyeOff, Trash2, Star, Quote, Edit2, Save, X } from 'lucide-react'
 import { cn } from '@/lib/utils'

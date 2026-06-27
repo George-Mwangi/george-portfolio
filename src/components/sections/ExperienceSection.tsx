@@ -1,4 +1,6 @@
 'use client'
+export const dynamic = 'force-dynamic'
+
 
 import { useRef } from 'react'
 import { motion, useInView } from 'motion/react'
