@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
             <Shield className="w-8 h-8 text-primary" />
           </div>
           <h1 className="text-2xl font-display font-bold text-foreground">Admin Login</h1>
-          <p className="text-muted-foreground text-sm mt-1">Joan Mwangi Portfolio Management</p>
+          <p className="text-muted-foreground text-sm mt-1">George Mwangi Portfolio Management</p>
         </div>
 
         {/* Form */}

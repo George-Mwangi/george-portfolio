@@ -1,4 +1,4 @@
-# Joan Mwangi Portfolio — Complete Documentation
+# George Mwangi Portfolio — Complete Documentation
 
 > Version 2.0 · Next.js 15 · React 19 · Prisma 6 · PostgreSQL
 
@@ -28,7 +28,7 @@
 
 ## 1. System Overview
 
-This is a production-ready, full-stack portfolio web application for **Joan Mwangi**, a Certified Procurement and Supply Professional (CPSP-K). It combines:
+This is a production-ready, full-stack portfolio web application for **George Mwangi**, a Certified Procurement and Supply Professional (CPSP-K). It combines:
 
 - A **public-facing portfolio website** with separate pages for each section
 - A **secure admin console** where all content can be added, edited, or deleted
@@ -83,10 +83,10 @@ Browser
 ## 3. Folder Structure
 
 ```
-joan-portfolio/
+george-portfolio/
 ├── prisma/
 │   ├── schema.prisma          ← Full database schema (all 14 models)
-│   └── seed.ts                ← Seeds Joan's data on first run
+│   └── seed.ts                ← Seeds George's data on first run
 │
 ├── public/
 │   └── uploads/               ← Profile photo, logo, favicon (local dev)
@@ -190,7 +190,7 @@ joan-portfolio/
 | Model | Purpose |
 |---|---|
 | `User` | Admin accounts (email + bcrypt password) |
-| `Profile` | Joan's bio, contact info, photo URL, favicon URL |
+| `Profile` | George's bio, contact info, photo URL, favicon URL |
 | `Experience` | Work history entries |
 | `Education` | Academic qualifications |
 | `Certification` | Professional certifications (CPSP-K etc.) |
@@ -336,7 +336,7 @@ SMTP_HOST="smtp.gmail.com"
 SMTP_PORT="587"
 SMTP_USER="your@gmail.com"
 SMTP_PASS="your-app-password"
-CONTACT_EMAIL="joanivymwangi@gmail.com"
+CONTACT_EMAIL="mwangig25@gmail.com"
 
 # ── Optional: Analytics ───────────────────────────────────
 NEXT_PUBLIC_PLAUSIBLE_DOMAIN="your-domain.vercel.app"
@@ -354,7 +354,7 @@ NEXT_PUBLIC_PLAUSIBLE_DOMAIN="your-domain.vercel.app"
 
 ```bash
 # 1. Extract zip and open terminal in the folder
-cd joan-mwangi-portfolio
+cd george-mwangi-portfolio
 
 # 2. Install dependencies
 npm install
@@ -377,7 +377,7 @@ Open:
 - Admin: http://localhost:3000/admin/login
 
 Login credentials:
-- Email: `joanivymwangi@gmail.com`
+- Email: `mwangig25@gmail.com`
 - Password: whatever you set as `ADMIN_PASSWORD` in `.env.local` (default: `Admin@2024!`)
 
 ---
@@ -387,7 +387,7 @@ Login credentials:
 ### Step 1 — Free PostgreSQL at Neon
 
 1. Go to **neon.tech** → Sign up free (no credit card)
-2. Create project → name it `joan-portfolio`
+2. Create project → name it `george-portfolio`
 3. Copy the **Connection string** (looks like `postgresql://...`)
 
 ### Step 2 — Push code to GitHub
@@ -397,7 +397,7 @@ git init
 git add .
 git commit -m "Initial commit"
 # Create a repo on github.com first, then:
-git remote add origin https://github.com/YOUR_USERNAME/joan-portfolio.git
+git remote add origin https://github.com/YOUR_USERNAME/george-portfolio.git
 git push -u origin main
 ```
 
@@ -426,11 +426,11 @@ On your computer, temporarily point your local `.env.local` `DATABASE_URL` to Ne
 npm run db:seed
 ```
 
-This loads Joan's profile, skills, experience, and sample projects into the live database.
+This loads George's profile, skills, experience, and sample projects into the live database.
 
 ### Step 5 — Custom domain (optional, free)
 
-In Vercel dashboard → your project → **Domains** → add your domain (e.g. `joanmwangi.co.ke`). Vercel provides free SSL automatically.
+In Vercel dashboard → your project → **Domains** → add your domain (e.g. `georgemwangi.co.ke`). Vercel provides free SSL automatically.
 
 ---
 
@@ -594,4 +594,4 @@ npm run db:reset     # drops all tables and re-runs migrations + seed
 
 ---
 
-*Documentation generated for Joan Mwangi Portfolio v2.0 — June 2026*
+*Documentation generated for George Mwangi Portfolio v2.0 — June 2026*

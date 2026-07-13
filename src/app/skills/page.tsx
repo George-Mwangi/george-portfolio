@@ -9,7 +9,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Skills',
-  description: 'Skills and tools expertise of Joan Mwangi — procurement, logistics, sales and customer service.',
+  description: 'Skills and tools expertise of George Mwangi — procurement, logistics, sales and customer service.',
 }
 
 export default async function SkillsPage() {
@@ -21,7 +21,7 @@ export default async function SkillsPage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Joan Mwangi'} />
+      <Navbar profileName={profile?.name || 'George Mwangi'} />
       <PageHero title="Skills & Tools" subtitle="Capabilities built across years of professional experience" />
       <SkillsSection skills={skills} />
       <ToolsSection tools={tools} />

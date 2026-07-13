@@ -53,7 +53,7 @@ export function ContactSection({ profile }: { profile: Profile | null }) {
         throw new Error(error.message || 'Failed to send message')
       }
 
-      toast.success('Message sent! Joan will get back to you soon.')
+      toast.success('Message sent! George will get back to you soon.')
       reset()
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
@@ -66,8 +66,8 @@ export function ContactSection({ profile }: { profile: Profile | null }) {
     {
       icon: Mail,
       label: 'Email',
-      value: profile?.email || 'joanivymwangi@gmail.com',
-      href: `mailto:${profile?.email || 'joanivymwangi@gmail.com'}`,
+      value: profile?.email || 'mwangig25@gmail.com',
+      href: `mailto:${profile?.email || 'mwangig25@gmail.com'}`,
     },
     {
       icon: Phone,

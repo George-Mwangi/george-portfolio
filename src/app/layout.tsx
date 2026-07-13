@@ -11,22 +11,22 @@ const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', 
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await prisma.profile.findFirst({ where: { isPublished: true } }).catch(() => null)
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://joanmwangi.vercel.app'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://georgemwangi.vercel.app'
 
   return {
     metadataBase: new URL(siteUrl),
     title: {
-      default: `${profile?.name || 'Joan Mwangi'} | Procurement Officer & Supply Chain Professional Kenya`,
-      template: `%s | ${profile?.name || 'Joan Mwangi'}`,
+      default: `${profile?.name || 'George Mwangi'} | Procurement Officer & Supply Chain Professional Kenya`,
+      template: `%s | ${profile?.name || 'George Mwangi'}`,
     },
     description: 'Certified Procurement and Supply Professional (CPSP-K) with expertise in supply chain logistics, sales, and customer service. Based in Nakuru, Kenya.',
-    keywords: ['Procurement Officer Kenya','CPSP-K Kenya','Logistics Professional Kenya','Customer Service Kenya','Sales Executive Kenya','Joan Mwangi'],
-    authors: [{ name: profile?.name || 'Joan Mwangi' }],
+    keywords: ['Procurement Officer Kenya','CPSP-K Kenya','Logistics Professional Kenya','Customer Service Kenya','Sales Executive Kenya','George Mwangi'],
+    authors: [{ name: profile?.name || 'George Mwangi' }],
     openGraph: {
       type: 'website', locale: 'en_KE', url: siteUrl,
-      title: `${profile?.name || 'Joan Mwangi'} | Procurement Officer`,
+      title: `${profile?.name || 'George Mwangi'} | Procurement Officer`,
       description: 'CPSP-K certified. Supply chain, logistics, sales. Based in Nakuru, Kenya.',
-      siteName: `${profile?.name || 'Joan Mwangi'} Portfolio`,
+      siteName: `${profile?.name || 'George Mwangi'} Portfolio`,
     },
     twitter: { card: 'summary_large_image' },
     robots: { index: true, follow: true },

@@ -67,7 +67,7 @@ export function TestimonialSubmitForm() {
             <MessageSquarePlus className="w-6 h-6 text-primary" />
           </div>
           <h2 className="text-3xl font-display font-bold text-foreground mb-2">Leave a Testimonial</h2>
-          <p className="text-muted-foreground">Worked with Joan? Share your experience — it will appear here after review.</p>
+          <p className="text-muted-foreground">Worked with George? Share your experience — it will appear here after review.</p>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -120,7 +120,7 @@ export function TestimonialSubmitForm() {
 
             <div suppressHydrationWarning>
               <label className="block text-sm font-medium text-foreground mb-1.5">Your Testimonial <span className="text-primary">*</span></label>
-              <textarea {...register('content')} rows={5} placeholder="Share your experience working with Joan..."
+              <textarea {...register('content')} rows={5} placeholder="Share your experience working with George..."
                 className="w-full px-4 py-2.5 rounded-xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none text-sm transition-all resize-none"
                 suppressHydrationWarning />
               {errors.content && <p className="mt-1 text-xs text-destructive">{errors.content.message}</p>}

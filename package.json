@@ -1,7 +1,7 @@
 {
-  "name": "joan-mwangi-portfolio",
+  "name": "george-mwangi-portfolio",
   "version": "1.0.0",
-  "description": "Professional portfolio for Joan Mwangi – Procurement Officer & Supply Chain Professional",
+  "description": "Professional portfolio for George Mwangi – Procurement Officer & Supply Chain Professional",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

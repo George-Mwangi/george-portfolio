@@ -10,7 +10,7 @@ async function main() {
 
   await prisma.user.update({
     where: {
-      email: 'joanivymwangi@gmail.com',
+      email: 'mwangig25@gmail.com',
     },
     data: {
       password: hash,

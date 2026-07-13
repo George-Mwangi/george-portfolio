@@ -15,7 +15,7 @@ function hashPassword(password: string): string {
 }
 
 async function main() {
-  const email    = process.env.ADMIN_EMAIL    || 'joanivymwangi@gmail.com'
+  const email    = process.env.ADMIN_EMAIL    || 'mwangig25@gmail.com'
   const password = process.env.ADMIN_PASSWORD || 'Admin@2024!'
 
   const user = await prisma.user.findUnique({ where: { email } })

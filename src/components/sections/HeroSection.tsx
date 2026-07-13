@@ -29,7 +29,7 @@ export function HeroSection({ profile }: { profile: Profile | null }) {
     return () => clearInterval(id)
   }, [titles.length])
 
-  const name = profile?.name || 'Joan Mwangi'
+  const name = profile?.name || 'George Mwangi'
 
   return (
     <section

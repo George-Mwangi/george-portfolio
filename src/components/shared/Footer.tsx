@@ -15,7 +15,7 @@ export function Footer({ profile }: { profile: Profile | null }) {
           <div>
             <div className="flex items-center gap-2.5 mb-3">
               <span className="w-8 h-8 rounded-lg bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">JM</span>
-              <span className="font-display font-bold text-foreground">Joan Mwangi</span>
+              <span className="font-display font-bold text-foreground">George Mwangi</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Procurement Officer &amp; Supply Chain Professional.<br />CPSP‑K Certified. Based in Nakuru, Kenya.
@@ -36,8 +36,8 @@ export function Footer({ profile }: { profile: Profile | null }) {
             <ul className="space-y-2 text-sm text-muted-foreground list-none p-0 m-0">
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-primary shrink-0" />
-                <a href={`mailto:${profile?.email || 'joanivymwangi@gmail.com'}`} className="hover:text-primary transition-colors truncate">
-                  {profile?.email || 'joanivymwangi@gmail.com'}
+                <a href={`mailto:${profile?.email || 'mwangig25@gmail.com'}`} className="hover:text-primary transition-colors truncate">
+                  {profile?.email || 'mwangig25@gmail.com'}
                 </a>
               </li>
               {profile?.phone && (
@@ -56,7 +56,7 @@ export function Footer({ profile }: { profile: Profile | null }) {
           </div>
         </div>
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <p>© {year} Joan Mwangi. All rights reserved.</p>
+          <p>© {year} George Mwangi. All rights reserved.</p>
 <a
   href="https://george-mwangi.github.io/Portfolio/"
   target="_blank"

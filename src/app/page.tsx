@@ -19,10 +19,10 @@ import { prisma } from '@/lib/prisma'
 // ── Fallback seed data (used when DB is not yet connected) ─────────────────────
 const FALLBACK = {
   profile: {
-    id: '1', name: 'Joan Mwangi',
+    id: '1', name: 'George Mwangi',
     title: ['Procurement Officer', 'Sales Executive', 'Customer Service Professional', 'Logistics Specialist'],
     summary: "I'm a proactive and adaptable professional with a strong background in sales, customer service, administrative support, and logistics. I have built a track record of delivering exceptional customer experiences, resolving issues promptly, and consistently surpassing sales targets. I bring a people-first approach, excellent communication skills, and strong attention to detail.",
-    email: 'joanivymwangi@gmail.com', phone: '+254719440407', location: 'Nakuru, Kenya',
+    email: 'mwangig25@gmail.com', phone: '+254719440407', location: 'Nakuru, Kenya',
     whatsappNumber: '+254719440407', linkedinUrl: null, githubUrl: null, twitterUrl: null,
     profileImageUrl: null, faviconUrl: null, logoUrl: null, cvUrl: null, cvFileName: null,
     isPublished: true, createdAt: new Date(), updatedAt: new Date(),
@@ -87,7 +87,7 @@ export default async function HomePage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={d.profile?.name || 'Joan Mwangi'} />
+      <Navbar profileName={d.profile?.name || 'George Mwangi'} />
 
       <HeroSection profile={d.profile} />
       <AboutSection profile={d.profile} />

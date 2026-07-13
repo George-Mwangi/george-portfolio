@@ -10,7 +10,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Clients & Testimonials',
-  description: 'Clients and testimonials for Joan Mwangi — procurement and supply chain professional.',
+  description: 'Clients and testimonials for George Mwangi — procurement and supply chain professional.',
 }
 
 export default async function ClientsPage() {
@@ -22,7 +22,7 @@ export default async function ClientsPage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Joan Mwangi'} />
+      <Navbar profileName={profile?.name || 'George Mwangi'} />
       <PageHero title="Clients & Testimonials" subtitle="Organisations I've served and what they say" />
       <ClientsSection clients={clients} />
       {testimonials.length > 0 && <TestimonialsSection testimonials={testimonials} />}

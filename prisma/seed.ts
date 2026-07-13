@@ -12,8 +12,8 @@ async function main() {
   await prisma.user.deleteMany()
   await prisma.user.create({
     data: {
-      email: 'joanivymwangi@gmail.com',
-      name: 'Joan Mwangi',
+      email: 'mwangig25@gmail.com',
+      name: 'George Mwangi',
       password: hashedPassword,
       role: 'ADMIN',
     },
@@ -23,7 +23,7 @@ async function main() {
   await prisma.profile.deleteMany()
   await prisma.profile.create({
     data: {
-      name: 'Joan Mwangi',
+      name: 'George Mwangi',
       title: [
         'Procurement Officer',
         'Sales Executive',
@@ -32,7 +32,7 @@ async function main() {
       ],
       summary:
         "I'm a proactive and adaptable professional with a strong background in sales, customer service, administrative support, and logistics. I have built a track record of delivering exceptional customer experiences, resolving issues promptly, and consistently surpassing sales targets. I bring a people-first approach, excellent communication skills, and strong attention to detail. I thrive in dynamic environments and take pride in helping businesses grow by building trust with customers.",
-      email: 'joanivymwangi@gmail.com',
+      email: 'mwangig25@gmail.com',
       phone: '+254719440407',
       location: 'Nakuru, Kenya',
       whatsappNumber: '+254719440407',
@@ -166,7 +166,7 @@ async function main() {
 
   console.log('Seed complete')
   console.log('Admin login:')
-  console.log('Email: joanivymwangi@gmail.com')
+  console.log('Email: mwangig25@gmail.com')
   console.log(`Password: ${adminPassword}`)
 }
 

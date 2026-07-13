@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Experience',
-  description: 'Work history of Joan Mwangi — procurement officer, sales executive, logistics specialist.',
+  description: 'Work history of George Mwangi — procurement officer, sales executive, logistics specialist.',
 }
 
 export default async function ExperiencePage() {
@@ -19,7 +19,7 @@ export default async function ExperiencePage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Joan Mwangi'} />
+      <Navbar profileName={profile?.name || 'George Mwangi'} />
       <PageHero title="Work Experience" subtitle="A timeline of roles and responsibilities" />
       <ExperienceSection experiences={experiences} />
       <Footer profile={profile} />

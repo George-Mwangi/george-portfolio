@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -18,16 +19,11 @@ model User {
   auditLogs AuditLog[]
 }
 
-enum Role {
-  ADMIN
-  SUPER_ADMIN
-}
-
 model Profile {
   id              String   @id @default(cuid())
   name            String
   title           String[]
-  summary         String   @db.Text
+  summary         String
   email           String
   phone           String?
   location        String?
@@ -52,7 +48,7 @@ model Experience {
   startDate    DateTime
   endDate      DateTime?
   isCurrent    Boolean   @default(false)
-  description  String?   @db.Text
+  description  String?
   achievements String[]
   location     String?
   order        Int       @default(0)
@@ -72,7 +68,7 @@ model Education {
   endDate     DateTime?
   isCurrent   Boolean   @default(false)
   grade       String?
-  description String?   @db.Text
+  description String?
   order       Int       @default(0)
   isPublished Boolean   @default(true)
   createdAt   DateTime  @default(now())
@@ -112,13 +108,6 @@ model Skill {
   @@index([order])
 }
 
-enum SkillCategory {
-  CORE
-  TECHNICAL
-  SOFT
-  LANGUAGE
-}
-
 model Tool {
   id          String       @id @default(cuid())
   name        String
@@ -132,18 +121,10 @@ model Tool {
   @@index([category])
 }
 
-enum ToolCategory {
-  CRM_SUPPORT
-  PRODUCTIVITY
-  PROJECT_MANAGEMENT
-  COMMUNICATION
-  ERP_ACCOUNTING
-}
-
 model Project {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
-  description String   @db.Text
+  description String
   category    String?
   imageUrl    String?
   projectUrl  String?
@@ -151,11 +132,11 @@ model Project {
   client      String?
   startDate   DateTime?
   endDate     DateTime?
-  isFeatured  Boolean  @default(false)
-  order       Int      @default(0)
-  isPublished Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isFeatured  Boolean   @default(false)
+  order       Int       @default(0)
+  isPublished Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([order])
   @@index([isFeatured])
@@ -167,7 +148,7 @@ model Client {
   industry    String?
   logoUrl     String?
   websiteUrl  String?
-  description String?  @db.Text
+  description String?
   order       Int      @default(0)
   isPublished Boolean  @default(true)
   createdAt   DateTime @default(now())
@@ -179,7 +160,7 @@ model Client {
 model Achievement {
   id          String    @id @default(cuid())
   title       String
-  description String    @db.Text
+  description String
   date        DateTime?
   icon        String?
   order       Int       @default(0)
@@ -194,7 +175,7 @@ model Testimonial {
   authorTitle    String?
   authorCompany  String?
   authorImageUrl String?
-  content        String   @db.Text
+  content        String
   rating         Int      @default(5)
   isPublished    Boolean  @default(false)
   order          Int      @default(0)
@@ -207,7 +188,7 @@ model ContactMessage {
   name      String
   email     String
   subject   String?
-  message   String        @db.Text
+  message   String
   status    MessageStatus @default(UNREAD)
   ipAddress String?
   userAgent String?
@@ -216,13 +197,6 @@ model ContactMessage {
 
   @@index([status])
   @@index([createdAt])
-}
-
-enum MessageStatus {
-  UNREAD
-  READ
-  REPLIED
-  ARCHIVED
 }
 
 model Resume {
@@ -240,7 +214,7 @@ model Resume {
 model SiteSettings {
   id          String   @id @default(cuid())
   key         String   @unique
-  value       String   @db.Text
+  value       String
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -251,15 +225,42 @@ model SiteSettings {
 model AuditLog {
   id         String   @id @default(cuid())
   userId     String
-  user       User     @relation(fields: [userId], references: [id])
   action     String
   resource   String
   resourceId String?
   details    Json?
   ipAddress  String?
   createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([resource])
   @@index([createdAt])
+}
+
+enum Role {
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum SkillCategory {
+  CORE
+  TECHNICAL
+  SOFT
+  LANGUAGE
+}
+
+enum ToolCategory {
+  CRM_SUPPORT
+  PRODUCTIVITY
+  PROJECT_MANAGEMENT
+  COMMUNICATION
+  ERP_ACCOUNTING
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
 }

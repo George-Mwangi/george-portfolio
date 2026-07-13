@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Resume',
-  description: 'Download the CV of Joan Mwangi — CPSP-K certified procurement and supply professional.',
+  description: 'Download the CV of George Mwangi — CPSP-K certified procurement and supply professional.',
 }
 
 export default async function ResumePage() {
@@ -16,7 +16,7 @@ export default async function ResumePage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Joan Mwangi'} />
+      <Navbar profileName={profile?.name || 'George Mwangi'} />
       <PageHero title="Resume / CV" subtitle="Download a full copy of my professional resume" />
       <ResumeSection cvUrl={profile?.cvUrl} />
       <Footer profile={profile} />

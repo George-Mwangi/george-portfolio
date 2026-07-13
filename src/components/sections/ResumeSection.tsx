@@ -60,7 +60,7 @@ export function ResumeSection({ cvUrl }: { cvUrl?: string | null }) {
               </>
             ) : (
               <a
-                href="mailto:joanivymwangi@gmail.com?subject=CV%20Request&body=Hi%20Joan%2C%20I%20would%20like%20to%20request%20a%20copy%20of%20your%20CV."
+                href="mailto:mwangig25@gmail.com?subject=CV%20Request&body=Hi%20George%2C%20I%20would%20like%20to%20request%20a%20copy%20of%20your%20CV."
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-primary text-primary-foreground font-medium text-lg hover:bg-primary/90 transition-all hover:scale-105 active:scale-100"
               >
                 <Download className="w-5 h-5" />

@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Learn about Joan Mwangi — CPSP-K certified procurement professional based in Nakuru, Kenya.',
+  description: 'Learn about George Mwangi — CPSP-K certified procurement professional based in Nakuru, Kenya.',
 }
 
 export default async function AboutPage() {
@@ -16,7 +16,7 @@ export default async function AboutPage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Joan Mwangi'} />
+      <Navbar profileName={profile?.name || 'George Mwangi'} />
       <PageHero title="About Me" subtitle="My story, values and what drives me" />
       <AboutSection profile={profile} />
       <Footer profile={profile} />

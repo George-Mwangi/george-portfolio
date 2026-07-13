@@ -9,7 +9,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Education',
-  description: 'Academic background and professional certifications of Joan Mwangi.',
+  description: 'Academic background and professional certifications of George Mwangi.',
 }
 
 export default async function EducationPage() {
@@ -21,7 +21,7 @@ export default async function EducationPage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Joan Mwangi'} />
+      <Navbar profileName={profile?.name || 'George Mwangi'} />
       <PageHero title="Education" subtitle="Academic foundations and professional certifications" />
       <EducationSection education={education} />
       <CertificationsSection certifications={certifications} />

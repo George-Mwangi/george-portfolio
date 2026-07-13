@@ -1,6 +1,6 @@
-# Joan Mwangi – Professional Portfolio
+# George Mwangi – Professional Portfolio
 
-A production-ready, full-stack portfolio web application for **Joan Mwangi**, Certified Procurement & Supply Professional (CPSP-K).
+A production-ready, full-stack portfolio web application for **George Mwangi**, Certified Procurement & Supply Professional (CPSP-K).
 
 Built with **Next.js 15**, **React 19**, **TypeScript**, **Tailwind CSS**, **Motion (v12)**, **Prisma**, and **PostgreSQL**.
 
@@ -43,8 +43,8 @@ Built with **Next.js 15**, **React 19**, **TypeScript**, **Tailwind CSS**, **Mot
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/yourusername/joan-mwangi-portfolio.git
-cd joan-mwangi-portfolio
+git clone https://github.com/yourusername/george-mwangi-portfolio.git
+cd george-mwangi-portfolio
 npm install
 ```
 
@@ -68,7 +68,7 @@ AUTH_URL="http://localhost:3000"
 ```bash
 npm run db:generate   # Generate Prisma client
 npm run db:push       # Push schema to database
-npm run db:seed       # Seed with Joan's data
+npm run db:seed       # Seed with George's data
 ```
 
 ### 4. Run dev server
@@ -80,7 +80,7 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) to see the portfolio.
 
 Admin panel: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
-- Email: `joanivymwangi@gmail.com`
+- Email: `mwangig25@gmail.com`
 - Password: `Admin@2024!` *(change this in production!)*
 
 ---
@@ -90,7 +90,7 @@ Admin panel: [http://localhost:3000/admin/login](http://localhost:3000/admin/log
 ### Step 1: Create a Neon database
 
 1. Go to [neon.tech](https://neon.tech) and create a free account
-2. Create a new project named `joan-portfolio`
+2. Create a new project named `george-portfolio`
 3. Copy the **connection string** (looks like `postgresql://user:pass@host/db?sslmode=require`)
 
 ### Step 2: Deploy to Vercel
@@ -106,7 +106,7 @@ Admin panel: [http://localhost:3000/admin/login](http://localhost:3000/admin/log
 | `AUTH_SECRET` | Run `openssl rand -base64 32` to generate |
 | `AUTH_URL` | `https://your-domain.vercel.app` |
 | `NEXT_PUBLIC_SITE_URL` | `https://your-domain.vercel.app` |
-| `ADMIN_PASSWORD` | A strong password for Joan's admin account |
+| `ADMIN_PASSWORD` | A strong password for George's admin account |
 
 4. Click **Deploy**
 
@@ -153,7 +153,7 @@ docker-compose exec app npm run db:seed
 ## 📁 Project Structure
 
 ```
-joan-portfolio/
+george-portfolio/
 ├── src/
 │   ├── app/
 │   │   ├── page.tsx                  # Public portfolio (Server Component)
@@ -180,7 +180,7 @@ joan-portfolio/
 │   └── styles/globals.css            # Design tokens + global styles
 ├── prisma/
 │   ├── schema.prisma                 # Full database schema
-│   └── seed.ts                       # Seed with Joan's data
+│   └── seed.ts                       # Seed with George's data
 ├── Dockerfile                        # Production Docker image
 ├── docker-compose.yml                # Local dev with PostgreSQL
 ├── .env.example                      # Environment variable template
@@ -239,7 +239,7 @@ To receive contact form notifications:
 Add to `.env.local`:
 
 ```env
-NEXT_PUBLIC_PLAUSIBLE_DOMAIN="joanmwangi.vercel.app"
+NEXT_PUBLIC_PLAUSIBLE_DOMAIN="georgemwangi.vercel.app"
 ```
 
 Then add the Plausible script to `src/app/layout.tsx`:
@@ -265,4 +265,4 @@ Then add the Plausible script to `src/app/layout.tsx`:
 
 ## 📄 License
 
-Private — all rights reserved by Joan Mwangi.
+Private — all rights reserved by George Mwangi.
