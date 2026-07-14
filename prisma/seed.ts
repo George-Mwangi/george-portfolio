@@ -222,7 +222,6 @@ async function main() {
       { name: 'Slack', category: ToolCategory.COMMUNICATION, order: 2, isPublished: true },
       { name: 'Microsoft Teams', category: ToolCategory.COMMUNICATION, order: 3, isPublished: true },
       { name: 'Google Meet', category: ToolCategory.COMMUNICATION, order: 4, isPublished: true },
-      { name: 'POS Systems', category: ToolCategory.ERP_ACCOUNTING, order: 3, isPublished: true },
     ],
   })
   console.log('Tools created')
