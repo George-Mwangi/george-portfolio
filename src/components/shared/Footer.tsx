@@ -14,7 +14,7 @@ export function Footer({ profile }: { profile: Profile | null }) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-2.5 mb-3">
-              <span className="w-8 h-8 rounded-lg bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">JM</span>
+              <span className="w-8 h-8 rounded-lg bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">GM</span>
               <span className="font-display font-bold text-foreground">George Mwangi</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">

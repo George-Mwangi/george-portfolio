@@ -22,143 +22,206 @@ async function main() {
 
   await prisma.profile.deleteMany()
   await prisma.profile.create({
-    data: {
-      name: 'George Mwangi',
-      title: [
-        'Procurement Officer',
-        'Sales Executive',
-        'Customer Service Professional',
-        'Logistics Specialist',
-      ],
-      summary:
-        "I'm a proactive and adaptable professional with a strong background in sales, customer service, administrative support, and logistics. I have built a track record of delivering exceptional customer experiences, resolving issues promptly, and consistently surpassing sales targets. I bring a people-first approach, excellent communication skills, and strong attention to detail. I thrive in dynamic environments and take pride in helping businesses grow by building trust with customers.",
-      email: 'mwangig25@gmail.com',
-      phone: '+254719440407',
-      location: 'Nakuru, Kenya',
-      whatsappNumber: '+254719440407',
-      isPublished: true,
-    },
-  })
+  data: {
+    name: 'George Mwangi',
+    title: [
+      'Software Developer',
+      'System Administrator',
+      'IT Support Specialist',
+      'Cybersecurity Enthusiast',
+    ],
+    summary:
+      'Results-driven IT Professional with over five years of experience in software development, systems administration, IT support, enterprise business systems, and digital transformation. Experienced in developing business applications, administering enterprise infrastructure, automating workflows, supporting networks, implementing business systems, and improving operational efficiency. Passionate about cybersecurity, cloud technologies, and building modern software solutions.',
+    email: 'mwangig25@gmail.com',
+    phone: '+254706609056',
+    whatsappNumber: '+254706609056',
+    location: 'Nakuru, Kenya',
+    isPublished: true,
+  },
+})
   console.log('Profile created')
 
   await prisma.experience.deleteMany()
   await prisma.experience.createMany({
-    data: [
-      {
-        company: 'Outspan Hospital',
-        role: 'Procurement Officer',
-        startDate: new Date('2026-01-01'),
-        isCurrent: true,
-        location: 'Kenya',
-        achievements: [
-          'Procurement Planning',
-          'Supplier Evaluation',
-          'Contract Negotiation',
-          'Procurement Documentation',
-          'Inventory Management',
-          'Warehouse Coordination',
-          'Logistics Coordination',
-          'Regulatory Compliance',
-          'Procurement Reporting',
-        ],
-        order: 1,
-        isPublished: true,
-      },
-      {
-        company: 'Airtel Kenya',
-        role: 'Sales Executive',
-        startDate: new Date('2025-01-01'),
-        endDate: new Date('2025-12-31'),
-        isCurrent: false,
-        location: 'Kenya',
-        achievements: [
-          'Agent Recruitment',
-          'Distribution Channel Management',
-          'Territory Mapping',
-          'Route Planning',
-          'Market Expansion',
-          'Relationship Management',
-          'Sales Growth',
-          'Product Visibility',
-          'Market Intelligence',
-          'Sales Reporting',
-        ],
-        order: 2,
-        isPublished: true,
-      },
-    ],
-  })
+  data: [
+    {
+      company: 'Agventure Limited',
+      role: 'System Administrator | Systems Developer | IT Support Specialist',
+      startDate: new Date('2021-02-01'),
+      endDate: new Date('2025-09-30'),
+      isCurrent: false,
+      location: 'Nakuru, Kenya',
+      achievements: [
+        'Developed business applications using Knack and AppSheet',
+        'Administered Windows Servers and Microsoft 365',
+        'Managed company network infrastructure and firewalls',
+        'Supported Palladium Accounting System',
+        'Managed SmartB Weighbridge System',
+        'Implemented CCTV, biometric and alarm systems',
+        'Coordinated IT hardware procurement and maintenance',
+        'Provided organisation-wide technical support',
+        'Supported transport and logistics operations',
+      ],
+      order: 1,
+      isPublished: true,
+    },
+    {
+      company: 'FSD Africa',
+      role: 'Software Developer',
+      startDate: new Date('2020-09-01'),
+      endDate: new Date('2020-11-30'),
+      isCurrent: false,
+      location: 'Nairobi, Kenya',
+      achievements: [
+        'Developed Power Platform applications',
+        'Built workflow automation solutions',
+        'Contributed to ERP implementation',
+        'Created Power BI dashboards',
+        'Collaborated with international stakeholders',
+      ],
+      order: 2,
+      isPublished: true,
+    },
+    {
+      company: 'Joetrix Infotech',
+      role: 'IT Consultant & Software Developer',
+      startDate: new Date('2020-01-01'),
+      endDate: new Date('2020-08-31'),
+      isCurrent: false,
+      location: 'Nairobi, Kenya',
+      achievements: [
+        'Managed Microsoft 365 environments',
+        'Administered Windows Servers',
+        'Managed Azure Active Directory',
+        'Supported SharePoint deployments',
+        'Provided IT support and software development',
+      ],
+      order: 3,
+      isPublished: true,
+    },
+  ],
+})
   console.log('Experience created')
 
   await prisma.education.deleteMany()
   await prisma.education.createMany({
-    data: [
-      {
-        institution: 'Kenya Institute of Supply Examination Board',
-        degree: 'Certified Procurement and Supply Professional of Kenya (CPSP-K)',
-        field: 'Procurement & Supply',
-        startDate: new Date('2024-01-01'),
-        endDate: new Date('2024-12-31'),
-        order: 1,
-        isPublished: true,
-      },
-      {
-        institution: 'Kabarak University',
-        degree: "Bachelor's Degree",
-        field: 'Procurement and Logistics',
-        startDate: new Date('2019-01-01'),
-        endDate: new Date('2023-12-31'),
-        order: 2,
-        isPublished: true,
-      },
-    ],
-  })
-  console.log('Education created')
-
-  await prisma.certification.deleteMany()
-  await prisma.certification.create({
-    data: {
-      name: 'Certified Procurement and Supply Professional of Kenya',
-      issuer: 'Kenya Institute of Supply Examination Board',
-      issueDate: new Date('2024-12-01'),
+  data: [
+    {
+      institution: 'Chuka University',
+      degree: 'Diploma',
+      field: 'Computer Science',
+      startDate: new Date('2017-01-01'),
+      endDate: new Date('2020-12-31'),
       order: 1,
       isPublished: true,
     },
-  })
+    {
+      institution: 'CodeBrave',
+      degree: 'Cybersecurity Training',
+      field: 'Cybersecurity',
+      startDate: new Date('2021-01-01'),
+      endDate: new Date('2021-12-31'),
+      order: 2,
+      isPublished: true,
+    },
+    {
+      institution: 'Udemy',
+      degree: 'Certificate',
+      field: 'Web Development',
+      startDate: new Date('2020-01-01'),
+      endDate: new Date('2020-12-31'),
+      order: 3,
+      isPublished: true,
+    },
+  ],
+})
+  console.log('Education created')
+
+  await prisma.certification.deleteMany()
+  await prisma.certification.createMany({
+  data: [
+    {
+      name: 'International Computer Driving License (ICDL)',
+      issuer: 'ICDL',
+      order: 1,
+      isPublished: true,
+    },
+    {
+      name: 'Google Digital Skills',
+      issuer: 'Google',
+      order: 2,
+      isPublished: true,
+    },
+    {
+      name: 'Certificate in Web Development',
+      issuer: 'Udemy',
+      order: 3,
+      isPublished: true,
+    },
+    {
+      name: 'Cybersecurity Training',
+      issuer: 'CodeBrave',
+      order: 4,
+      isPublished: true,
+    },
+    {
+      name: 'TryHackMe Security Badges',
+      issuer: 'TryHackMe',
+      order: 5,
+      isPublished: true,
+    },
+  ],
+})
   console.log('Certifications created')
 
   await prisma.skill.deleteMany()
   await prisma.skill.createMany({
-    data: [
-      { name: 'Procurement Management', category: SkillCategory.CORE, proficiency: 95, order: 1, isPublished: true },
-      { name: 'Supply Chain Logistics', category: SkillCategory.CORE, proficiency: 90, order: 2, isPublished: true },
-      { name: 'Contract Negotiation', category: SkillCategory.CORE, proficiency: 88, order: 3, isPublished: true },
-      { name: 'Sales & Business Development', category: SkillCategory.CORE, proficiency: 92, order: 4, isPublished: true },
-      { name: 'Customer Service', category: SkillCategory.CORE, proficiency: 95, order: 5, isPublished: true },
-      { name: 'Inventory Management', category: SkillCategory.CORE, proficiency: 88, order: 6, isPublished: true },
-    ],
-  })
+  data: [
+    { name: 'Python', category: SkillCategory.CORE, proficiency: 90, order: 1, isPublished: true },
+    { name: 'React', category: SkillCategory.CORE, proficiency: 88, order: 2, isPublished: true },
+    { name: 'Node.js', category: SkillCategory.CORE, proficiency: 85, order: 3, isPublished: true },
+    { name: 'System Administration', category: SkillCategory.CORE, proficiency: 92, order: 4, isPublished: true },
+    { name: 'Microsoft 365 Administration', category: SkillCategory.CORE, proficiency: 90, order: 5, isPublished: true },
+    { name: 'Network Administration', category: SkillCategory.CORE, proficiency: 88, order: 6, isPublished: true },
+    { name: 'Cybersecurity', category: SkillCategory.CORE, proficiency: 80, order: 7, isPublished: true },
+    { name: 'SQL Databases', category: SkillCategory.CORE, proficiency: 88, order: 8, isPublished: true },
+    { name: 'Power Platform', category: SkillCategory.CORE, proficiency: 90, order: 9, isPublished: true },
+    { name: 'IT Support', category: SkillCategory.CORE, proficiency: 95, order: 10, isPublished: true },
+  ],
+})
   console.log('Skills created')
 
   await prisma.tool.deleteMany()
   await prisma.tool.createMany({
-    data: [
-      { name: 'Zendesk', category: ToolCategory.CRM_SUPPORT, order: 1, isPublished: true },
-      { name: 'HubSpot', category: ToolCategory.CRM_SUPPORT, order: 2, isPublished: true },
-      { name: 'Freshdesk', category: ToolCategory.CRM_SUPPORT, order: 3, isPublished: true },
-      { name: 'Microsoft Office', category: ToolCategory.PRODUCTIVITY, order: 1, isPublished: true },
-      { name: 'Microsoft Excel', category: ToolCategory.PRODUCTIVITY, order: 2, isPublished: true },
-      { name: 'Microsoft Word', category: ToolCategory.PRODUCTIVITY, order: 3, isPublished: true },
-      { name: 'PowerPoint', category: ToolCategory.PRODUCTIVITY, order: 4, isPublished: true },
-      { name: 'Google Workspace', category: ToolCategory.PRODUCTIVITY, order: 5, isPublished: true },
+  data: [
+      { name: 'Python', category: ToolCategory.PROGRAMMING, order: 1, isPublished: true },
+      { name: 'React', category: ToolCategory.PROGRAMMING, order: 2, isPublished: true },
+      { name: 'Next.js', category: ToolCategory.PROGRAMMING, order: 3, isPublished: true },
+      { name: 'FastAPI', category: ToolCategory.PROGRAMMING, order: 4, isPublished: true },
+      { name: 'PostgreSQL', category: ToolCategory.DATABASE, order: 1, isPublished: true },
+      { name: 'Prisma', category: ToolCategory.DATABASE, order: 2, isPublished: true },
+      { name: 'Git', category: ToolCategory.DEVOPS, order: 1, isPublished: true },
+      { name: 'GitHub', category: ToolCategory.DEVOPS, order: 2, isPublished: true },
+      { name: 'Vercel', category: ToolCategory.DEVOPS, order: 3, isPublished: true },
+      { name: 'Microsoft 365', category: ToolCategory.CLOUD, order: 1, isPublished: true },
+      { name: 'Google Workspace', category: ToolCategory.CLOUD, order: 2, isPublished: true },
+      { name: 'Windows Server', category: ToolCategory.SYSTEMS, order: 1, isPublished: true },
+      { name: 'Active Directory', category: ToolCategory.SYSTEMS, order: 2, isPublished: true },
+      { name: 'SharePoint', category: ToolCategory.SYSTEMS, order: 3, isPublished: true },
+      { name: 'Power Apps', category: ToolCategory.PRODUCTIVITY, order: 1, isPublished: true },
+      { name: 'Power BI', category: ToolCategory.PRODUCTIVITY, order: 2, isPublished: true },
+      { name: 'Power Automate', category: ToolCategory.PRODUCTIVITY, order: 3, isPublished: true },
+      { name: 'Wireshark', category: ToolCategory.SECURITY, order: 1, isPublished: true },
+      { name: 'Nmap', category: ToolCategory.SECURITY, order: 2, isPublished: true },
+      { name: 'TryHackMe', category: ToolCategory.SECURITY, order: 3, isPublished: true },
+      { name: 'Teams', category: ToolCategory.COMMUNICATION, order: 1, isPublished: true },
+      { name: 'Slack', category: ToolCategory.COMMUNICATION, order: 2, isPublished: true },
+      { name: 'Zoom', category: ToolCategory.COMMUNICATION, order: 3, isPublished: true },
       { name: 'Trello', category: ToolCategory.PROJECT_MANAGEMENT, order: 1, isPublished: true },
       { name: 'ClickUp', category: ToolCategory.PROJECT_MANAGEMENT, order: 2, isPublished: true },
-      { name: 'Zoom', category: ToolCategory.COMMUNICATION, order: 1, isPublished: true },
       { name: 'Slack', category: ToolCategory.COMMUNICATION, order: 2, isPublished: true },
       { name: 'Microsoft Teams', category: ToolCategory.COMMUNICATION, order: 3, isPublished: true },
       { name: 'Google Meet', category: ToolCategory.COMMUNICATION, order: 4, isPublished: true },
-      { name: 'QuickBooks', category: ToolCategory.ERP_ACCOUNTING, order: 1, isPublished: true },
-      { name: 'SAP', category: ToolCategory.ERP_ACCOUNTING, order: 2, isPublished: true },
       { name: 'POS Systems', category: ToolCategory.ERP_ACCOUNTING, order: 3, isPublished: true },
     ],
   })

@@ -66,7 +66,7 @@ export function AdminDashboardClient({ user, initialData }: Props) {
       )}>
         <div className="h-16 flex items-center justify-between px-5 border-b border-border shrink-0">
           <div className="flex items-center gap-2.5">
-            <span className="w-8 h-8 rounded-lg bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">JM</span>
+            <span className="w-8 h-8 rounded-lg bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">GM</span>
             <span className="font-display font-bold text-sm text-foreground">Admin Panel</span>
           </div>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-muted-foreground hover:text-foreground">

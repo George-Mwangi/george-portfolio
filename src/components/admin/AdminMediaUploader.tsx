@@ -29,7 +29,7 @@ const MEDIA_CONFIG: { type: MediaType; label: string; description: string; accep
   {
     type: 'favicon',
     label: 'Favicon',
-    description: 'The small icon shown in browser tabs. Replaces the default JM initials.',
+    description: 'The small icon shown in browser tabs. Replaces the default GM initials.',
     accept: 'image/png,image/x-icon,image/svg+xml',
     maxMB: 1,
     recommended: '32×32px or 64×64px PNG/ICO/SVG.',
