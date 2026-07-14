@@ -215,7 +215,7 @@ export function HeroSection({ profile }: { profile: Profile | null }) {
                     <Sparkles className="w-12 h-12 text-primary/30 mb-3" />
                     <span className="text-7xl sm:text-8xl font-display font-bold"
                       style={{ color: 'hsl(162 69% 37% / 0.4)' }}>
-                      JM
+                      GM
                     </span>
                   </div>
                 )}
