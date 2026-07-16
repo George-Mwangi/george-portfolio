@@ -241,7 +241,7 @@ export function HeroSection({ profile }: { profile: Profile | null }) {
                 className="absolute -right-4 bottom-1/4 glass-card rounded-2xl px-4 py-3 border border-primary/20 shadow-xl"
               >
                 <p className="text-base font-display font-bold text-primary leading-none">IT</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Profesional</p>
+                <p className="text-xs text-muted-foreground mt-0.5">professional</p>
               </motion.div>
             </div>
           </motion.div>
