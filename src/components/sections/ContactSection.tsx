@@ -99,7 +99,7 @@ export function ContactSection({ profile }: { profile: Profile | null }) {
             Contact Me
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Open to Web Development, Cyber Security and System Administration across the Gloab.
+            Open to Web Development, Cyber Security and System Administration opportunities across the Globe.
             Reach out and let's talk.
           </p>
         </motion.div>
