@@ -18,7 +18,7 @@ export function Footer({ profile }: { profile: Profile | null }) {
               <span className="font-display font-bold text-foreground">George Mwangi</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Procurement Officer &amp; Supply Chain Professional.<br />CPSP‑K Certified. Based in Nakuru, Kenya.
+              IT Professional, Cyber Security Specialist &amp;<br />Full Stack Web Developer, Network & Systems Administrator. <br /> Based in Nakuru, Kenya.
             </p>
           </div>
           <div>
@@ -58,7 +58,7 @@ export function Footer({ profile }: { profile: Profile | null }) {
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <p>© {year} George Mwangi. All rights reserved.</p>
 <a
-  href="https://george-mwangi.github.io/Portfolio/"
+  href="https://george-portfolio-alpha.vercel.app/"
   target="_blank"
   rel="noopener noreferrer"
   className="flex items-center gap-1.5 hover:text-primary transition-colors"

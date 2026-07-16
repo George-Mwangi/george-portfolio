@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Learn about George Mwangi — CPSP-K certified procurement professional based in Nakuru, Kenya.',
+  description: 'Learn about George Mwangi — IT professional based in Nakuru, Kenya.',
 }
 
 export default async function AboutPage() {

@@ -9,7 +9,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Skills',
-  description: 'Skills and tools expertise of George Mwangi — procurement, logistics, sales and customer service.',
+  description: 'Skills and tools expertise of George Mwangi — Web Development, Cyber Security and System Administration.',
 }
 
 export default async function SkillsPage() {

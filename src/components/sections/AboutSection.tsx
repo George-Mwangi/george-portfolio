@@ -8,15 +8,32 @@ import { Award, Users, TrendingUp, Star, Building2 } from 'lucide-react'
 interface Profile { name: string; summary: string; location?: string | null }
 
 const STATS = [
-  { icon: Award,      label: 'CPSP-K Certified', value: '2024' },
-  { icon: TrendingUp, label: 'Industries',        value: '3+' },
-  { icon: Users,      label: 'Years Experience',  value: '5+' },
-  { icon: Star,       label: 'Roles Held',        value: '4+' },
+  {
+    icon: Award,
+    label: 'Cyber Security',
+    value: '2021',
+  },
+  {
+    icon: TrendingUp,
+    label: 'Years Experience',
+    value: '5+',
+  },
+  {
+    icon: Users,
+    label: 'Projects Built',
+    value: '20+',
+  },
+  {
+    icon: Star,
+    label: 'Technologies',
+    value: '15+',
+  },
 ]
 
 export function AboutSection({ profile }: { profile: Profile | null }) {
-  const summary = profile?.summary ||
-    "I'm a proactive and adaptable professional with a strong background in sales, customer service, administrative support, and logistics. I bring a people-first approach, excellent communication skills, and strong attention to detail."
+  const summary =
+  profile?.summary ||
+  "I'm an IT Professional, Cyber Security Specialist, and Full Stack Web Developer with experience designing secure, scalable applications and supporting business technology infrastructure. I enjoy solving complex technical challenges through software development, networking, cloud technologies, automation, and cyber security."
 
   const sentences = summary.match(/[^.!?]+[.!?]+/g) || [summary]
   const mid = Math.ceil(sentences.length / 2)
@@ -56,21 +73,28 @@ export function AboutSection({ profile }: { profile: Profile | null }) {
 
             {/* Current role pill */}
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="glass-card rounded-2xl p-4 border border-primary/20 bg-primary/5 flex items-center gap-3"
-            >
-              <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                <Building2 className="w-4 h-4 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-primary">Currently at Outspan Hospital</p>
-                <p className="text-xs text-muted-foreground">Procurement Officer · Jan 2026 – Present</p>
-              </div>
-              <span className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse-slow shrink-0" />
-            </motion.div>
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="glass-card rounded-2xl p-4 border border-primary/20 bg-primary/5 flex items-center gap-3"
+              >
+                <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <Building2 className="w-4 h-4 text-primary" />
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-primary">
+                    Available for Remote & On-site Opportunities
+                  </p>
+
+                  <p className="text-xs text-muted-foreground">
+                    IT • Cyber Security • Full Stack Development • Network & System Administration
+                  </p>
+                </div>
+
+                <span className="ml-auto w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
+              </motion.div>
           </motion.div>
 
           {/* Text */}
@@ -84,7 +108,7 @@ export function AboutSection({ profile }: { profile: Profile | null }) {
               About Me
             </span>
             <h2 className="text-4xl lg:text-5xl font-display font-bold text-foreground mt-2 mb-6">
-              People-First<br />Professional
+              Building Secure<br />Digital Solutions
             </h2>
 
             <div className="space-y-4 text-muted-foreground leading-relaxed text-base">
@@ -94,9 +118,18 @@ export function AboutSection({ profile }: { profile: Profile | null }) {
 
             <div className="mt-8 flex flex-wrap gap-2">
               {[
-                'Procurement Planning', 'Contract Negotiation',
-                'Supply Chain', 'Customer Relations',
-                'Sales Strategy', 'Inventory Management',
+                'Cyber Security',
+                'Penetration Testing',
+                'Python',
+                'React',
+                'Next.js',
+                'TypeScript',
+                'FastAPI',
+                'PostgreSQL',
+                'Network Administration',
+                'Cloud Computing',
+                'Linux',
+                'Git',
               ].map((tag) => (
                 <span key={tag}
                   className="px-3 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">

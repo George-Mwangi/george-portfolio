@@ -109,7 +109,7 @@ export function ExperienceSection({ experiences }: { experiences: Experience[] }
           <span className="text-primary text-xs font-semibold tracking-widest uppercase">Career</span>
           <h2 className="text-4xl lg:text-5xl font-display font-bold text-foreground mt-2 mb-4">Work Experience</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A track record of delivering results in procurement, sales, and customer-facing roles.
+            A track record of delivering results in Web Development, Cyber Security and System Administration roles.
           </p>
         </motion.div>
         <div className="max-w-3xl mx-auto">

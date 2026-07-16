@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Resume',
-  description: 'Download the CV of George Mwangi — CPSP-K certified procurement and supply professional.',
+  description: 'Download the CV of George Mwangi.',
 }
 
 export default async function ResumePage() {

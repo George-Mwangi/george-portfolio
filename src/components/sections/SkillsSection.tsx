@@ -74,7 +74,7 @@ export function SkillsSection({ skills }: { skills: Skill[] }) {
             Skills & Expertise
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A comprehensive skillset built across procurement, customer service, logistics, and sales.
+            A comprehensive skillset built across Web Development, Cyber Security and System Administration.
           </p>
         </motion.div>
 

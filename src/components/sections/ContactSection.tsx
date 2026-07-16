@@ -73,7 +73,7 @@ export function ContactSection({ profile }: { profile: Profile | null }) {
       icon: Phone,
       label: 'Phone',
       value: profile?.phone || '+254 719 440 407',
-      href: `tel:${profile?.phone || '+254719440407'}`,
+      href: `tel:${profile?.phone || '+254706609056'}`,
     },
     {
       icon: MapPin,
@@ -99,7 +99,7 @@ export function ContactSection({ profile }: { profile: Profile | null }) {
             Contact Me
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Open to procurement, logistics, and customer service opportunities across Kenya.
+            Open to Web Development, Cyber Security and System Administration across the Gloab.
             Reach out and let's talk.
           </p>
         </motion.div>

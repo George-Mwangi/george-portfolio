@@ -1,7 +1,7 @@
 {
   "name": "george-mwangi-portfolio",
   "version": "1.0.0",
-  "description": "Professional portfolio for George Mwangi – Procurement Officer & Supply Chain Professional",
+  "description": "Professional portfolio for George Mwangi –  IT Professional, Cyber Security Specialist & Web Developer",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

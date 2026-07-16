@@ -30,7 +30,7 @@ export async function PUT(req: NextRequest) {
 
     const profile = existing
       ? await prisma.profile.update({ where: { id: existing.id }, data })
-      : await prisma.profile.create({ data: { ...data, title: ['Procurement Officer'] } })
+      : await prisma.profile.create({ data: { ...data, title: ['IT Proffesional'] } })
 
     await prisma.auditLog.create({
       data: {

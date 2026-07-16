@@ -83,7 +83,7 @@ export function AdminProjectsEditor({ projects: init }: { projects: any[] }) {
             ))}
             <div suppressHydrationWarning>
               <label className="text-xs font-medium text-muted-foreground mb-1 block">Tags (comma-separated)</label>
-              <input value={form.tags||''} onChange={e=>setForm({...form,tags:e.target.value})} placeholder="procurement, logistics, Kenya"
+              <input value={form.tags||''} onChange={e=>setForm({...form,tags:e.target.value})} placeholder="IT, Cyber Security, FullStack Development, Kenya"
                 className="w-full px-3 py-2 rounded-xl bg-background border border-border text-foreground text-sm focus:border-primary/50 focus:outline-none" suppressHydrationWarning />
             </div>
           </div>

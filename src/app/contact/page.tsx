@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Get in touch with George Mwangi — open to procurement and logistics opportunities in Kenya.',
+  description: 'Get in touch with George Mwangi — open to Web Development, Cyber Security and System Administration opportunities around the world.',
 }
 
 export default async function ContactPage() {

@@ -32,7 +32,7 @@ export function EducationSection({ education }: { education: Education[] }) {
             Education
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Academic foundations in Procurement & Logistics, backed by professional certification.
+            Academic foundations in Computer Science, backed by professional certification.
           </p>
         </motion.div>
 

@@ -28,7 +28,7 @@
 
 ## 1. System Overview
 
-This is a production-ready, full-stack portfolio web application for **George Mwangi**, a Certified Procurement and Supply Professional (CPSP-K). It combines:
+This is a production-ready, full-stack portfolio web application for **George Mwangi**, a Certified Cyber Security Specialist & Web Develope. It combines:
 
 - A **public-facing portfolio website** with separate pages for each section
 - A **secure admin console** where all content can be added, edited, or deleted

@@ -10,7 +10,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Clients & Testimonials',
-  description: 'Clients and testimonials for George Mwangi — procurement and supply chain professional.',
+  description: 'Clients and testimonials for George Mwangi — IT professional.',
 }
 
 export default async function ClientsPage() {

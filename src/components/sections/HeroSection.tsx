@@ -22,7 +22,7 @@ export function HeroSection({ profile }: { profile: Profile | null }) {
 
   const titles = profile?.title?.length
     ? profile.title
-    : ['Procurement Officer', 'Sales Executive', 'Customer Service Professional', 'Logistics Specialist']
+    : ['IT Professional', 'Cyber Security Specialist', 'Full Stack Web Developer ', 'Network & Systems Administrator']
 
   useEffect(() => {
     const id = setInterval(() => setTitleIndex((i) => (i + 1) % titles.length), 3000)
@@ -120,15 +120,18 @@ export function HeroSection({ profile }: { profile: Profile | null }) {
             </motion.div>
 
             {/* Summary */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0"
-            >
-              Certified Procurement &amp; Supply Professional (CPSP‑K) specialising in procurement
-              planning, supplier management, and logistics coordination across Kenya.
-            </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0"
+              >
+                IT Professional, Cyber Security Specialist, and Full Stack Web Developer with
+                experience building secure web applications, managing IT infrastructure,
+                supporting enterprise systems, and delivering technology solutions that drive
+                business efficiency. Passionate about ethical hacking, automation, and solving
+                real-world challenges through innovative software.
+              </motion.p>
 
             {/* CTA */}
             <motion.div
@@ -237,8 +240,8 @@ export function HeroSection({ profile }: { profile: Profile | null }) {
                 transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                 className="absolute -right-4 bottom-1/4 glass-card rounded-2xl px-4 py-3 border border-primary/20 shadow-xl"
               >
-                <p className="text-base font-display font-bold text-primary leading-none">CPSP‑K</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Certified</p>
+                <p className="text-base font-display font-bold text-primary leading-none">IT</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Profesional</p>
               </motion.div>
             </div>
           </motion.div>

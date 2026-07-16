@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Experience',
-  description: 'Work history of George Mwangi — procurement officer, sales executive, logistics specialist.',
+  description: 'Work history of George Mwangi — IT Professional, Cyber Security Specialist, Full Stack Web Developer, Network & Systems Administrator.',
 }
 
 export default async function ExperiencePage() {

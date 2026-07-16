@@ -105,7 +105,7 @@ export function TestimonialSubmitForm() {
               </div>
               <div suppressHydrationWarning>
                 <label className="block text-sm font-medium text-foreground mb-1.5">Job Title</label>
-                <input {...register('authorTitle')} placeholder="Procurement Manager"
+                <input {...register('authorTitle')} placeholder="IT Professional"
                   className="w-full px-4 py-2.5 rounded-xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none text-sm transition-all"
                   suppressHydrationWarning />
               </div>

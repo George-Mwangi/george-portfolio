@@ -44,7 +44,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
           <span className="text-primary text-xs font-semibold tracking-widest uppercase">Portfolio</span>
           <h2 className="text-4xl lg:text-5xl font-display font-bold text-foreground mt-2 mb-4">Projects</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Highlighted work and key deliverables across procurement, logistics, and sales projects.</p>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Highlighted work and key deliverables across Web Development and Cyber Security projects.</p>
         </motion.div>
 
         {categories.length > 2 && (
