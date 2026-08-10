@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { signOut } from 'next-auth/react'
 import { User, Briefcase, GraduationCap, Wrench, BadgeCheck, MessageSquare,
   LogOut, LayoutDashboard, Star, FolderOpen, Building2, Image, Settings,
-  Mail, Download, ChevronRight, Menu, X, Users, Quote } from 'lucide-react'
+  Mail, Download, ChevronRight, Menu, X, Quote, SlidersHorizontal } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { AdminProfileEditor }      from './AdminProfileEditor'
 import { AdminExperienceEditor }   from './AdminExperienceEditor'
@@ -17,11 +17,14 @@ import { AdminClientsEditor }      from './AdminClientsEditor'
 import { AdminTestimonialsEditor } from './AdminTestimonialsEditor'
 import { AdminMessagesPanel }      from './AdminMessagesPanel'
 import { AdminMediaUploader }      from './AdminMediaUploader'
+import { AdminSectionsEditor }     from './AdminSectionsEditor'
+import type { SiteSectionSetting } from '@/lib/siteSections'
 
-type Tab = 'overview'|'profile'|'experience'|'education'|'skills'|'tools'|'certifications'|'projects'|'clients'|'testimonials'|'messages'|'media'
+type Tab = 'overview'|'sections'|'profile'|'experience'|'education'|'skills'|'tools'|'certifications'|'projects'|'clients'|'testimonials'|'messages'|'media'
 
 const NAV: { id: Tab; label: string; icon: React.ElementType; badge?: number }[] = [
   { id: 'overview',       label: 'Overview',        icon: LayoutDashboard },
+  { id: 'sections',       label: 'Website Sections',icon: SlidersHorizontal },
   { id: 'profile',        label: 'Profile',         icon: User },
   { id: 'media',          label: 'Media & Branding',icon: Image },
   { id: 'experience',     label: 'Experience',      icon: Briefcase },
@@ -41,6 +44,7 @@ interface Props {
     profile: any; experiences: any[]; education: any[]; skills: any[]; tools: any[]
     certifications: any[]; projects: any[]; clients: any[]
     messages: any[]; testimonials: any[]
+    siteSections: SiteSectionSetting[]
     stats: { totalMessages: number; unreadMessages: number; totalDownloads: number; pendingTestimonials: number }
   }
 }
@@ -132,6 +136,7 @@ export function AdminDashboardClient({ user, initialData }: Props) {
 
         <main className="flex-1 p-6 overflow-auto">
           {tab === 'overview'       && <AdminOverview stats={stats} setTab={setTab} initialData={initialData} />}
+          {tab === 'sections'       && <AdminSectionsEditor initialSections={initialData.siteSections} />}
           {tab === 'profile'        && <AdminProfileEditor      profile={initialData.profile} />}
           {tab === 'media'          && <AdminMediaUploader       profile={initialData.profile} />}
           {tab === 'experience'     && <AdminExperienceEditor    experiences={initialData.experiences} />}

@@ -15,6 +15,8 @@ import { ResumeSection } from '@/components/sections/ResumeSection'
 import { ContactSection } from '@/components/sections/ContactSection'
 import { ParticleBackground } from '@/components/shared/ParticleBackground'
 import { prisma } from '@/lib/prisma'
+import { getSiteSections } from '@/lib/siteSectionSettings'
+import { isSiteSectionEnabled, type SiteSectionId } from '@/lib/siteSections'
 
 // ── Fallback seed data (used when DB is not yet connected) ─────────────────────
 const FALLBACK = {
@@ -323,7 +325,7 @@ const FALLBACK = {
 
 async function getData() {
   try {
-    const [profile, experiences, education, certifications, skills, tools, projects, clients, testimonials] =
+    const [profile, experiences, education, certifications, skills, tools, projects, clients, testimonials, siteSections] =
       await Promise.all([
         prisma.profile.findFirst({ where: { isPublished: true } }),
         prisma.experience.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
@@ -334,43 +336,46 @@ async function getData() {
         prisma.project.findMany({ where: { isPublished: true }, orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }] }),
         prisma.client.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
         prisma.testimonial.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
+        getSiteSections(),
       ])
-    return { profile, experiences, education, certifications, skills, tools, projects, clients, testimonials }
+    return { profile, experiences, education, certifications, skills, tools, projects, clients, testimonials, siteSections }
   } catch {
-    return FALLBACK
+    return { ...FALLBACK, siteSections: await getSiteSections() }
   }
 }
 
 export default async function HomePage() {
   const d = await getData()
+  const enabledSectionIds = d.siteSections.filter((section) => section.enabled).map((section) => section.id)
+
+  const renderSection = (id: SiteSectionId) => {
+    switch (id) {
+      case 'hero': return <HeroSection profile={d.profile} enabledSections={enabledSectionIds} />
+      case 'about': return <AboutSection profile={d.profile} />
+      case 'skills': return <Suspense fallback={null}><SkillsSection skills={d.skills} /></Suspense>
+      case 'experience': return <Suspense fallback={null}><ExperienceSection experiences={d.experiences} /></Suspense>
+      case 'education': return <Suspense fallback={null}><EducationSection education={d.education} /></Suspense>
+      case 'certifications': return <Suspense fallback={null}><CertificationsSection certifications={d.certifications} /></Suspense>
+      case 'tools': return <Suspense fallback={null}><ToolsSection tools={d.tools} /></Suspense>
+      case 'projects': return d.projects.length > 0 ? <Suspense fallback={null}><ProjectsSection projects={d.projects} /></Suspense> : null
+      case 'clients': return d.clients.length > 0 ? <Suspense fallback={null}><ClientsSection clients={d.clients} /></Suspense> : null
+      case 'testimonials': return d.testimonials.length > 0 ? <Suspense fallback={null}><TestimonialsSection testimonials={d.testimonials} /></Suspense> : null
+      case 'resume': return <ResumeSection cvUrl={d.profile?.cvUrl} />
+      case 'contact': return <ContactSection profile={d.profile} />
+    }
+  }
 
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={d.profile?.name || 'George Mwangi'} />
+      <Navbar profileName={d.profile?.name || 'Portfolio'} sections={d.siteSections} />
 
-      <HeroSection profile={d.profile} />
-      <AboutSection profile={d.profile} />
+      {d.siteSections
+        .filter((section) => isSiteSectionEnabled(d.siteSections, section.id))
+        .sort((a, b) => a.order - b.order)
+        .map((section) => <div key={section.id} className="contents">{renderSection(section.id)}</div>)}
 
-      <Suspense fallback={null}><SkillsSection skills={d.skills} /></Suspense>
-      <Suspense fallback={null}><ExperienceSection experiences={d.experiences} /></Suspense>
-      <Suspense fallback={null}><EducationSection education={d.education} /></Suspense>
-      <Suspense fallback={null}><CertificationsSection certifications={d.certifications} /></Suspense>
-      <Suspense fallback={null}><ToolsSection tools={d.tools} /></Suspense>
-
-      {d.projects.length > 0 && (
-        <Suspense fallback={null}><ProjectsSection projects={d.projects} /></Suspense>
-      )}
-      {d.clients.length > 0 && (
-        <Suspense fallback={null}><ClientsSection clients={d.clients} /></Suspense>
-      )}
-      {d.testimonials.length > 0 && (
-        <Suspense fallback={null}><TestimonialsSection testimonials={d.testimonials} /></Suspense>
-      )}
-
-      <ResumeSection cvUrl={d.profile?.cvUrl} />
-      <ContactSection profile={d.profile} />
-      <Footer profile={d.profile} />
+      <Footer profile={d.profile} sections={d.siteSections} />
     </main>
   )
 }

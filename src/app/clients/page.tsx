@@ -7,6 +7,9 @@ import { ParticleBackground } from '@/components/shared/ParticleBackground'
 import { PageHero } from '@/components/shared/PageHero'
 import { prisma } from '@/lib/prisma'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { getSiteSections } from '@/lib/siteSectionSettings'
+import { isSiteSectionEnabled } from '@/lib/siteSections'
 
 export const metadata: Metadata = {
   title: 'Clients & Testimonials',
@@ -14,20 +17,24 @@ export const metadata: Metadata = {
 }
 
 export default async function ClientsPage() {
-  const [profile, clients, testimonials] = await Promise.all([
+  const [profile, clients, testimonials, sections] = await Promise.all([
     prisma.profile.findFirst({ where: { isPublished: true } }).catch(() => null),
     prisma.client.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }).catch(() => []),
     prisma.testimonial.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }).catch(() => []),
+    getSiteSections(),
   ])
+  const clientsEnabled = isSiteSectionEnabled(sections, 'clients')
+  const testimonialsEnabled = isSiteSectionEnabled(sections, 'testimonials')
+  if (!clientsEnabled && !testimonialsEnabled) notFound()
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'George Mwangi'} />
+      <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
       <PageHero title="Clients & Testimonials" subtitle="Organisations I've served and what they say" />
-      <ClientsSection clients={clients} />
-      {testimonials.length > 0 && <TestimonialsSection testimonials={testimonials} />}
-      <TestimonialSubmitForm />
-      <Footer profile={profile} />
+      {clientsEnabled && <ClientsSection clients={clients} />}
+      {testimonialsEnabled && testimonials.length > 0 && <TestimonialsSection testimonials={testimonials} />}
+      {testimonialsEnabled && <TestimonialSubmitForm />}
+      <Footer profile={profile} sections={sections} />
     </main>
   )
 }

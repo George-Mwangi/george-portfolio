@@ -5,6 +5,9 @@ import { ParticleBackground } from '@/components/shared/ParticleBackground'
 import { PageHero } from '@/components/shared/PageHero'
 import { prisma } from '@/lib/prisma'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { getSiteSections } from '@/lib/siteSectionSettings'
+import { isSiteSectionEnabled } from '@/lib/siteSections'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -12,14 +15,18 @@ export const metadata: Metadata = {
 }
 
 export default async function ContactPage() {
-  const profile = await prisma.profile.findFirst({ where: { isPublished: true } }).catch(() => null)
+  const [profile, sections] = await Promise.all([
+    prisma.profile.findFirst({ where: { isPublished: true } }).catch(() => null),
+    getSiteSections(),
+  ])
+  if (!isSiteSectionEnabled(sections, 'contact')) notFound()
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'George Mwangi'} />
+      <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
       <PageHero title="Contact" subtitle="Let's connect and explore opportunities together" />
       <ContactSection profile={profile} />
-      <Footer profile={profile} />
+      <Footer profile={profile} sections={sections} />
     </main>
   )
 }

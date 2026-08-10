@@ -1,13 +1,27 @@
 import Link from 'next/link'
 import { Mail, Phone, MapPin, Heart } from 'lucide-react'
+import { isSiteSectionEnabled, type SiteSectionSetting } from '@/lib/siteSections'
 
 interface Profile {
   name?: string; email?: string; phone?: string | null
   location?: string | null; linkedinUrl?: string | null
 }
 
-export function Footer({ profile }: { profile: Profile | null }) {
+const FOOTER_LINKS = [
+  { label: 'About', href: '/about', sections: ['about'] },
+  { label: 'Skills', href: '/skills', sections: ['skills', 'tools'] },
+  { label: 'Experience', href: '/experience', sections: ['experience'] },
+  { label: 'Education', href: '/education', sections: ['education', 'certifications'] },
+  { label: 'Projects', href: '/projects', sections: ['projects'] },
+  { label: 'Contact', href: '/contact', sections: ['contact'] },
+]
+
+export function Footer({ profile, sections }: { profile: Profile | null; sections?: SiteSectionSetting[] }) {
   const year = new Date().getFullYear()
+  const links = sections
+    ? FOOTER_LINKS.filter((link) => link.sections.some((id) => isSiteSectionEnabled(sections, id as SiteSectionSetting['id'])))
+    : FOOTER_LINKS
+  const contactEnabled = !sections || isSiteSectionEnabled(sections, 'contact')
   return (
     <footer className="border-t border-border bg-card/40 backdrop-blur" aria-label="Footer">
       <div className="section-container py-12">
@@ -24,14 +38,14 @@ export function Footer({ profile }: { profile: Profile | null }) {
           <div>
             <h3 className="font-semibold text-foreground text-sm mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm text-muted-foreground list-none p-0 m-0">
-              {['About', 'Skills', 'Experience', 'Education', 'Contact'].map((l) => (
-                <li key={l}>
-                  <Link href={`#${l.toLowerCase()}`} className="hover:text-primary transition-colors">{l}</Link>
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="hover:text-primary transition-colors">{link.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
-          <div>
+          {contactEnabled && <div>
             <h3 className="font-semibold text-foreground text-sm mb-4">Contact</h3>
             <ul className="space-y-2 text-sm text-muted-foreground list-none p-0 m-0">
               <li className="flex items-center gap-2">
@@ -53,7 +67,7 @@ export function Footer({ profile }: { profile: Profile | null }) {
                 </li>
               )}
             </ul>
-          </div>
+          </div>}
         </div>
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <p>© {year} George Mwangi. All rights reserved.</p>

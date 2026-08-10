@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { AdminDashboardClient } from '@/components/admin/AdminDashboardClient'
 import type { Metadata } from 'next'
+import { getSiteSections } from '@/lib/siteSectionSettings'
 
 export const metadata: Metadata = { title: 'Admin Dashboard' }
 
@@ -12,7 +13,7 @@ export default async function AdminDashboardPage() {
 
   const [
     profile, experiences, education, skills, tools,
-    certifications, projects, clients, messages, testimonials,
+    certifications, projects, clients, messages, testimonials, siteSections,
   ] = await Promise.all([
     prisma.profile.findFirst(),
     prisma.experience.findMany({ orderBy: { order: 'asc' } }),
@@ -24,6 +25,7 @@ export default async function AdminDashboardPage() {
     prisma.client.findMany({ orderBy: { order: 'asc' } }),
     prisma.contactMessage.findMany({ orderBy: { createdAt: 'desc' }, take: 50 }),
     prisma.testimonial.findMany({ orderBy: { order: 'asc' } }),
+    getSiteSections(),
   ])
 
   const [totalMessages, unreadMessages, totalDownloads, pendingTestimonials] = await Promise.all([
@@ -47,6 +49,7 @@ export default async function AdminDashboardPage() {
         clients,
         messages,
         testimonials,
+        siteSections,
         stats: { totalMessages, unreadMessages, totalDownloads, pendingTestimonials },
       }}
     />

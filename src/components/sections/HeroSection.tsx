@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Download, Mail, ArrowRight, MapPin, Phone, Sparkles } from 'lucide-react'
 import Link from 'next/link'
+import type { SiteSectionId } from '@/lib/siteSections'
 
 interface Profile {
   name: string
@@ -17,7 +18,7 @@ interface Profile {
   cvUrl?: string | null
 }
 
-export function HeroSection({ profile }: { profile: Profile | null }) {
+export function HeroSection({ profile, enabledSections = [] }: { profile: Profile | null; enabledSections?: SiteSectionId[] }) {
   const [titleIndex, setTitleIndex] = useState(0)
 
   const titles = profile?.title?.length
@@ -140,7 +141,7 @@ export function HeroSection({ profile }: { profile: Profile | null }) {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="flex flex-wrap gap-3 justify-center lg:justify-start"
             >
-              {profile?.cvUrl ? (
+              {enabledSections.includes('resume') && (profile?.cvUrl ? (
                 <a
                   href={profile.cvUrl}
                   download
@@ -157,23 +158,23 @@ export function HeroSection({ profile }: { profile: Profile | null }) {
                   <Download className="w-4 h-4" />
                   Download CV
                 </Link>
-              )}
+              ))}
 
-              <Link
+              {enabledSections.includes('contact') && <Link
                 href="#contact"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card/60 backdrop-blur text-foreground font-medium hover:border-primary/40 hover:bg-card transition-all hover:scale-105 active:scale-100"
               >
                 <Mail className="w-4 h-4" />
                 Contact Me
-              </Link>
+              </Link>}
 
-              <Link
-                href="#experience"
+              {enabledSections.includes('contact') && <Link
+                href="#contact"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-primary/25 bg-primary/8 text-primary font-medium hover:bg-primary/15 transition-all hover:scale-105 active:scale-100"
               >
                 Hire Me
                 <ArrowRight className="w-4 h-4" />
-              </Link>
+              </Link>}
             </motion.div>
           </div>
 

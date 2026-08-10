@@ -7,25 +7,30 @@ import { motion, useScroll, useMotionValueEvent } from 'motion/react'
 import { Menu, X, Moon, Sun, Download, ChevronDown } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
+import { isSiteSectionEnabled, type SiteSectionSetting } from '@/lib/siteSections'
 
-const NAV_LINKS = [
+const BASE_NAV_LINKS = [
   { href: '/',           label: 'Home',        exact: true },
-  { href: '/about',      label: 'About' },
-  { href: '/skills',     label: 'Skills' },
-  { href: '/experience', label: 'Experience' },
-  { href: '/education',  label: 'Education' },
-  { href: '/projects',   label: 'Projects' },
-  { href: '/clients',    label: 'Clients' },
-  { href: '/contact',    label: 'Contact' },
+  { href: '/about',      label: 'About', sections: ['about'] },
+  { href: '/skills',     label: 'Skills', sections: ['skills', 'tools'] },
+  { href: '/experience', label: 'Experience', sections: ['experience'] },
+  { href: '/education',  label: 'Education', sections: ['education', 'certifications'] },
+  { href: '/projects',   label: 'Projects', sections: ['projects'] },
+  { href: '/clients',    label: 'Clients', sections: ['clients', 'testimonials'] },
+  { href: '/contact',    label: 'Contact', sections: ['contact'] },
 ]
 
-export function Navbar({ profileName }: { profileName: string }) {
+export function Navbar({ profileName, sections }: { profileName: string; sections?: SiteSectionSetting[] }) {
   const [isOpen,   setIsOpen]   = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [mounted,  setMounted]  = useState(false)
   const { theme, setTheme } = useTheme()
   const { scrollY } = useScroll()
   const pathname = usePathname()
+  const navLinks = sections
+    ? BASE_NAV_LINKS.filter((link) => !link.sections || link.sections.some((id) => isSiteSectionEnabled(sections, id as SiteSectionSetting['id'])))
+    : BASE_NAV_LINKS
+  const contactEnabled = !sections || isSiteSectionEnabled(sections, 'contact')
 
   useEffect(() => { setMounted(true) }, [])
   useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 20))
@@ -54,7 +59,7 @@ export function Navbar({ profileName }: { profileName: string }) {
 
         {/* Desktop nav */}
         <ul className="hidden lg:flex items-center gap-0.5 list-none m-0 p-0">
-          {NAV_LINKS.map(({ href, label, exact }) => (
+          {navLinks.map(({ href, label, exact }) => (
             <li key={href}>
               <Link href={href}
                 className={cn(
@@ -78,10 +83,10 @@ export function Navbar({ profileName }: { profileName: string }) {
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
           )}
-          <Link href="/contact"
+          {contactEnabled && <Link href="/contact"
             className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all">
             Hire Me
-          </Link>
+          </Link>}
           <button onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden w-9 h-9 rounded-xl flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-all"
             aria-label={isOpen ? 'Close menu' : 'Open menu'} aria-expanded={isOpen}>
@@ -95,7 +100,7 @@ export function Navbar({ profileName }: { profileName: string }) {
         <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
           className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border">
           <ul className="px-4 py-4 flex flex-col gap-1 list-none m-0 p-0 pb-4 px-4">
-            {NAV_LINKS.map(({ href, label, exact }) => (
+            {navLinks.map(({ href, label, exact }) => (
               <li key={href}>
                 <Link href={href} onClick={() => setIsOpen(false)}
                   className={cn('block px-4 py-2.5 rounded-xl text-sm font-medium transition-all',
@@ -104,12 +109,12 @@ export function Navbar({ profileName }: { profileName: string }) {
                 </Link>
               </li>
             ))}
-            <li className="pt-2 mt-1 border-t border-border">
+            {contactEnabled && <li className="pt-2 mt-1 border-t border-border">
               <Link href="/contact" onClick={() => setIsOpen(false)}
                 className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all">
                 Hire Me
               </Link>
-            </li>
+            </li>}
           </ul>
         </motion.div>
       )}
