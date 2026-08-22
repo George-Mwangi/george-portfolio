@@ -9,6 +9,8 @@ import { notFound } from 'next/navigation'
 import { getSiteSections } from '@/lib/siteSectionSettings'
 import { isSiteSectionEnabled } from '@/lib/siteSections'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'About',
   description: 'Learn about George Mwangi — IT professional based in Nakuru, Kenya.',

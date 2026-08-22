@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import {
@@ -51,6 +52,12 @@ export async function PUT(req: NextRequest) {
       resourceId: setting.id,
     },
   })
+
+  // These routes read SiteSettings directly. Invalidate every public surface so
+  // a visibility change is reflected immediately in production deployments.
+  for (const path of ['/', '/about', '/skills', '/experience', '/education', '/projects', '/clients', '/contact', '/resume']) {
+    revalidatePath(path)
+  }
 
   return NextResponse.json(sections)
 }

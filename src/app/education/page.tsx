@@ -10,6 +10,8 @@ import { notFound } from 'next/navigation'
 import { getSiteSections } from '@/lib/siteSectionSettings'
 import { isSiteSectionEnabled } from '@/lib/siteSections'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Education',
   description: 'Academic background and professional certifications of George Mwangi.',
@@ -29,7 +31,10 @@ export default async function EducationPage() {
     <main className="relative min-h-screen">
       <ParticleBackground />
       <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
-      <PageHero title="Education" subtitle="Academic foundations and professional certifications" />
+      <PageHero
+        title={educationEnabled && certificationsEnabled ? 'Education & Certifications' : educationEnabled ? 'Education' : 'Certifications'}
+        subtitle="Academic foundations and professional certifications"
+      />
       {educationEnabled && <EducationSection education={education} />}
       {certificationsEnabled && <CertificationsSection certifications={certifications} />}
       <Footer profile={profile} sections={sections} />

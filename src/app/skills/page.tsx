@@ -10,6 +10,8 @@ import { notFound } from 'next/navigation'
 import { getSiteSections } from '@/lib/siteSectionSettings'
 import { isSiteSectionEnabled } from '@/lib/siteSections'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Skills',
   description: 'Skills and tools expertise of George Mwangi — Web Development, Cyber Security and System Administration.',
@@ -29,7 +31,10 @@ export default async function SkillsPage() {
     <main className="relative min-h-screen">
       <ParticleBackground />
       <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
-      <PageHero title="Skills & Tools" subtitle="Capabilities built across years of professional experience" />
+      <PageHero
+        title={skillsEnabled && toolsEnabled ? 'Skills & Tools' : skillsEnabled ? 'Skills' : 'Tools'}
+        subtitle="Capabilities built across years of professional experience"
+      />
       {skillsEnabled && <SkillsSection skills={skills} />}
       {toolsEnabled && <ToolsSection tools={tools} />}
       <Footer profile={profile} sections={sections} />

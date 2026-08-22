@@ -9,6 +9,8 @@ import { notFound } from 'next/navigation'
 import { getSiteSections } from '@/lib/siteSectionSettings'
 import { isSiteSectionEnabled } from '@/lib/siteSections'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Get in touch with George Mwangi — open to Web Development, Cyber Security and System Administration opportunities around the world.',

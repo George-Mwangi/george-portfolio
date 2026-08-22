@@ -9,6 +9,8 @@ import { notFound } from 'next/navigation'
 import { getSiteSections } from '@/lib/siteSectionSettings'
 import { isSiteSectionEnabled } from '@/lib/siteSections'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Experience',
   description: 'Work history of George Mwangi — IT Professional, Cyber Security Specialist, Full Stack Web Developer, Network & Systems Administrator.',

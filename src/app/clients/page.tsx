@@ -11,6 +11,8 @@ import { notFound } from 'next/navigation'
 import { getSiteSections } from '@/lib/siteSectionSettings'
 import { isSiteSectionEnabled } from '@/lib/siteSections'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Clients & Testimonials',
   description: 'Clients and testimonials for George Mwangi — IT professional.',
@@ -30,7 +32,10 @@ export default async function ClientsPage() {
     <main className="relative min-h-screen">
       <ParticleBackground />
       <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
-      <PageHero title="Clients & Testimonials" subtitle="Organisations I've served and what they say" />
+      <PageHero
+        title={clientsEnabled && testimonialsEnabled ? 'Clients & Testimonials' : clientsEnabled ? 'Clients' : 'Testimonials'}
+        subtitle="Organisations I've served and what they say"
+      />
       {clientsEnabled && <ClientsSection clients={clients} />}
       {testimonialsEnabled && testimonials.length > 0 && <TestimonialsSection testimonials={testimonials} />}
       {testimonialsEnabled && <TestimonialSubmitForm />}

@@ -18,6 +18,8 @@ import { prisma } from '@/lib/prisma'
 import { getSiteSections } from '@/lib/siteSectionSettings'
 import { isSiteSectionEnabled, type SiteSectionId } from '@/lib/siteSections'
 
+export const dynamic = 'force-dynamic'
+
 // ── Fallback seed data (used when DB is not yet connected) ─────────────────────
 const FALLBACK = {
   profile: {

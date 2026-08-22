@@ -20,6 +20,11 @@ export function Footer({ profile, sections }: { profile: Profile | null; section
   const year = new Date().getFullYear()
   const links = sections
     ? FOOTER_LINKS.filter((link) => link.sections.some((id) => isSiteSectionEnabled(sections, id as SiteSectionSetting['id'])))
+      .map((link) => {
+        if (link.href === '/skills' && !isSiteSectionEnabled(sections, 'skills')) return { ...link, label: 'Tools' }
+        if (link.href === '/education' && !isSiteSectionEnabled(sections, 'education')) return { ...link, label: 'Certifications' }
+        return link
+      })
     : FOOTER_LINKS
   const contactEnabled = !sections || isSiteSectionEnabled(sections, 'contact')
   return (

@@ -29,6 +29,12 @@ export function Navbar({ profileName, sections }: { profileName: string; section
   const pathname = usePathname()
   const navLinks = sections
     ? BASE_NAV_LINKS.filter((link) => !link.sections || link.sections.some((id) => isSiteSectionEnabled(sections, id as SiteSectionSetting['id'])))
+      .map((link) => {
+        if (link.href === '/skills' && !isSiteSectionEnabled(sections, 'skills')) return { ...link, label: 'Tools' }
+        if (link.href === '/education' && !isSiteSectionEnabled(sections, 'education')) return { ...link, label: 'Certifications' }
+        if (link.href === '/clients' && !isSiteSectionEnabled(sections, 'clients')) return { ...link, label: 'Testimonials' }
+        return link
+      })
     : BASE_NAV_LINKS
   const contactEnabled = !sections || isSiteSectionEnabled(sections, 'contact')
 

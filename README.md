@@ -1,6 +1,6 @@
 # George Mwangi – Professional Portfolio
 
-A production-ready, full-stack portfolio web application for **George Mwangi**, Certified  IT Professional, Cyber Security Specialist & Web Developer.
+A production-ready, full-stack portfolio web application for **George Mwangi**, Certified  IT Professional, Cyber Security Specialist & Full Stack Developer.
 
 Built with **Next.js 15**, **React 19**, **TypeScript**, **Tailwind CSS**, **Motion (v12)**, **Prisma**, and **PostgreSQL**.
 
