@@ -46,6 +46,20 @@ function normalize(data: Record<string, any>) {
 
 const lines = (value: unknown) => Array.isArray(value) ? value : String(value || '').split('\n').map((entry) => entry.trim()).filter(Boolean)
 
+function withEditableNestedFields(resource: string, item: Record<string, unknown>, raw: Record<string, unknown>) {
+  if (resource === 'experience') return {
+    ...item,
+    responsibilities: lines(raw.responsibilities),
+    experienceAchievements: lines(raw.experienceAchievements),
+  }
+  if (resource === 'project') return {
+    ...item,
+    imageList: lines(raw.imageList),
+    technologyNames: lines(raw.technologyNames),
+  }
+  return item
+}
+
 async function syncNested(resource: string, id: string, raw: Record<string, unknown>) {
   if (resource === 'experience') {
     const responsibilities = lines(raw.responsibilities)
@@ -155,14 +169,14 @@ export async function POST(req: NextRequest) {
       const item = await delegate.create({ data })
       await syncNested(resource, item.id, raw)
       await audit(session.user.id, 'CREATE', resource, item.id)
-      return NextResponse.json(item, { status: 201 })
+      return NextResponse.json(withEditableNestedFields(resource, item, raw), { status: 201 })
     }
     if (!id) return NextResponse.json({ message: 'Missing record id' }, { status: 400 })
     if (action === 'update') {
       const item = await delegate.update({ where: { id }, data })
       await syncNested(resource, id, raw)
       await audit(session.user.id, 'UPDATE', resource, id)
-      return NextResponse.json(item)
+      return NextResponse.json(withEditableNestedFields(resource, item, raw))
     }
     if (action === 'toggle' && config.status) {
       const current = await delegate.findUnique({ where: { id } })

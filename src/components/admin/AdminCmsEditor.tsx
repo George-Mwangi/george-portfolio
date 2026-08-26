@@ -43,7 +43,12 @@ export function AdminCmsEditor({ title, description, resource, items: initialIte
     setEditing(item || {})
     setForm(Object.fromEntries(fields.map((field) => {
       const value = item?.[field.name]
-      return [field.name, field.type === 'lines' && Array.isArray(value) ? value.join('\n') : value ?? (field.type === 'checkbox' ? false : '')]
+      const formatted = field.type === 'lines' && Array.isArray(value)
+        ? value.join('\n')
+        : field.type === 'date' && value
+          ? new Date(value).toISOString().slice(0, 10)
+          : value
+      return [field.name, formatted ?? (field.type === 'checkbox' ? false : '')]
     })))
   }
 

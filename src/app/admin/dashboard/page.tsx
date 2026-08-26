@@ -6,10 +6,13 @@ import type { Metadata } from 'next'
 import { getSiteSections } from '@/lib/siteSectionSettings'
 
 export const metadata: Metadata = { title: 'Admin Dashboard' }
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
-export default async function AdminDashboardPage() {
+export default async function AdminDashboardPage({ searchParams }: { searchParams: Promise<{ section?: string }> }) {
   const session = await auth()
   if (!session?.user) redirect('/admin/login')
+  const { section } = await searchParams
 
   const [
     profile, experiences, education, skills, tools,
@@ -48,17 +51,29 @@ export default async function AdminDashboardPage() {
     prisma.testimonial.count({ where: { isPublished: false } }),
   ])
 
+  const hydratedExperiences = experiences.map((experience) => ({
+    ...experience,
+    responsibilities: experience.details.filter((detail) => detail.type === 'RESPONSIBILITY').map((detail) => detail.text),
+    experienceAchievements: experience.details.filter((detail) => detail.type === 'ACHIEVEMENT').map((detail) => detail.text),
+  }))
+  const hydratedProjects = projects.map((project) => ({
+    ...project,
+    imageList: project.images.map((image) => `${image.url}${image.altText ? `|${image.altText}` : ''}`),
+    technologyNames: project.technologies.map((technology) => technology.skill.name),
+  }))
+
   return (
     <AdminDashboardClient
       user={{ name: session.user.name, email: session.user.email, id: session.user.id }}
+      initialSection={section}
       initialData={{
         profile,
-        experiences,
+        experiences: hydratedExperiences,
         education,
         skills,
         tools,
         certifications,
-        projects,
+        projects: hydratedProjects,
         clients,
         messages,
         testimonials,

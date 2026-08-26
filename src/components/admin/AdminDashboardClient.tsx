@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import { BarChart3, BadgeCheck, Briefcase, ChevronDown, FileText, FolderOpen, Image, LayoutDashboard, Link2, LogOut, Menu, MessageSquare, Navigation, Quote, Search, Settings, Sparkles, Star, User, Wrench, X } from 'lucide-react'
 import { AdminCmsEditor, type CmsField } from './AdminCmsEditor'
@@ -36,10 +37,18 @@ const groups: { label: string; items: { id: Tab; label: string; icon: React.Elem
 const yesNo = (name: string, label: string): CmsField => ({ name, label, type: 'checkbox' })
 const line = (name: string, label: string): CmsField => ({ name, label, type: 'lines', wide: true })
 
-export function AdminDashboardClient({ user, initialData: d }: { user: any; initialData: any & { siteSections: SiteSectionSetting[] } }) {
-  const [tab, setTab] = useState<Tab>('overview')
+export function AdminDashboardClient({ user, initialData: d, initialSection = 'overview' }: { user: any; initialData: any & { siteSections: SiteSectionSetting[] }; initialSection?: string }) {
+  const router = useRouter()
+  const validTabs = groups.flatMap((group) => group.items).map((entry) => entry.id)
+  const [tab, setTab] = useState<Tab>(validTabs.includes(initialSection as Tab) ? initialSection as Tab : 'overview')
   const [open, setOpen] = useState(false)
-  const go = (id: Tab) => { setTab(id); setOpen(false) }
+  const go = (id: Tab) => {
+    setTab(id)
+    setOpen(false)
+    // The active section lives in the URL, so refresh restores the same screen.
+    // Navigating also reloads the server data instead of reusing stale editor props.
+    router.replace(`/admin/dashboard?section=${id}`, { scroll: false })
+  }
   const item = groups.flatMap((group) => group.items).find((entry) => entry.id === tab)
   const ActiveIcon = item?.icon || LayoutDashboard
 
