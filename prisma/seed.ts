@@ -50,7 +50,7 @@ async function main() {
     { title:'Cybersecurity',description:'Security-conscious systems administration, assessment and infrastructure hardening.',order:4 },
   ] })
 
-  if (await prisma.achievement.count() === 0) await prisma.achievement.create({ data: { title:'Years Experience',label:'Years Experience',value:'5',suffix:'+',description:'Professional experience across software, systems, support and automation.',order:0,isPublished:true } })
+  if (await prisma.achievement.count() === 0) await prisma.achievement.create({ data: { title:'Years Experience',label:'Years Experience',value:'6',suffix:'+',description:'Professional experience across software, systems, support and automation.',order:0,isPublished:true } })
 
   for (const experience of await prisma.experience.findMany()) if (await prisma.experienceDetail.count({ where: { experienceId: experience.id } }) === 0 && experience.achievements.length) await prisma.experienceDetail.createMany({ data: experience.achievements.map((text,order)=>({ experienceId:experience.id,type:'RESPONSIBILITY',text,order })) })
 
