@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="200" viewBox="0 0 720 200" role="img" aria-labelledby="title description">
+  <title id="title">George Mwangi logo</title>
+  <desc id="description">A modern GM technology monogram with the George Mwangi wordmark.</desc>
+  <defs>
+    <linearGradient id="brand" x1="24" y1="20" x2="174" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#58E0B6"/>
+      <stop offset="1" stop-color="#1D9E75"/>
+    </linearGradient>
+    <linearGradient id="wordmark" x1="220" y1="55" x2="660" y2="150" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5FFFC"/>
+      <stop offset="1" stop-color="#B8D8CF"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="12" y="12" width="176" height="176" rx="45" fill="#071C1A"/>
+  <rect x="15" y="15" width="170" height="170" rx="42" fill="none" stroke="url(#brand)" stroke-width="6"/>
+
+  <!-- G: open system loop -->
+  <path d="M103 53C75 53 54 72 54 100C54 128 75 147 103 147C118 147 131 142 141 132V101H104"
+        fill="none" stroke="url(#brand)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- M: connected infrastructure nodes -->
+  <path d="M92 122V78L112 101L132 78V121" fill="none" stroke="#F5FFFC" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="54" cy="100" r="5" fill="#F5FFFC"/>
+  <circle cx="141" cy="101" r="5" fill="#58E0B6"/>
+  <circle cx="132" cy="78" r="4" fill="#58E0B6"/>
+
+  <text x="222" y="104" fill="url(#wordmark)" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="750" letter-spacing="2">GEORGE MWANGI</text>
+  <rect x="224" y="123" width="62" height="5" rx="2.5" fill="#1D9E75"/>
+  <text x="222" y="157" fill="#72BDA7" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="4">SYSTEMS • SOFTWARE • AUTOMATION</text>
+</svg>

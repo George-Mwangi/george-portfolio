@@ -20,6 +20,17 @@ function isVercelBlobUrl(url: string) {
   }
 }
 
+export async function GET() {
+  const session = await auth()
+  if (!session?.user) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+
+  const [assets, profile] = await Promise.all([
+    prisma.mediaAsset.findMany({ orderBy: { createdAt: 'desc' } }),
+    prisma.profile.findFirst({ select: { profileImageUrl: true, heroImageUrl: true, logoUrl: true, faviconUrl: true } }),
+  ])
+  return NextResponse.json({ assets, profile }, { headers: { 'Cache-Control': 'no-store' } })
+}
+
 export async function POST(req: NextRequest) {
   const session = await auth()
   if (!session?.user) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
