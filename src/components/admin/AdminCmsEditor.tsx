@@ -35,6 +35,7 @@ export function AdminCmsEditor({ title, description, resource, items: initialIte
   const [editing, setEditing] = useState<any | null>(null)
   const [form, setForm] = useState<Record<string, any>>({})
   const [saving, setSaving] = useState(false)
+  const singularTitle = title.endsWith('Categories') ? title.replace(/Categories$/, 'Category') : title.replace(/s$/, '')
 
   const sorted = useMemo(() => [...items].sort((a, b) => (a[orderField] ?? 0) - (b[orderField] ?? 0)), [items, orderField])
 
@@ -61,7 +62,7 @@ export function AdminCmsEditor({ title, description, resource, items: initialIte
       const saved = await request({ action, id: editing?.id, data: form })
       setItems((current) => action === 'create' ? [...current, saved] : current.map((item) => item.id === saved.id ? saved : item))
       setEditing(null)
-      toast.success(`${title.replace(/s$/, '')} saved`)
+      toast.success(`${singularTitle} saved`)
     } catch (error) { toast.error(error instanceof Error ? error.message : 'Unable to save') }
     finally { setSaving(false) }
   }
@@ -100,7 +101,7 @@ export function AdminCmsEditor({ title, description, resource, items: initialIte
     <section className="space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div><h2 className="font-display text-2xl font-bold text-foreground">{title}</h2><p className="mt-1 max-w-2xl text-sm text-muted-foreground">{description}</p></div>
-        <button onClick={() => open()} className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground"><Plus className="h-4 w-4" />{createLabel || `Add ${title.replace(/s$/, '')}`}</button>
+        <button onClick={() => open()} className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground"><Plus className="h-4 w-4" />{createLabel || `Add ${singularTitle}`}</button>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-border bg-card">
@@ -121,7 +122,7 @@ export function AdminCmsEditor({ title, description, resource, items: initialIte
           ))}</div>}
       </div>
 
-      <AdminModal open={editing !== null} onClose={() => setEditing(null)} title={`${editing?.id ? 'Edit' : 'Add'} ${title.replace(/s$/, '')}`}>
+      <AdminModal open={editing !== null} onClose={() => setEditing(null)} title={`${editing?.id ? 'Edit' : 'Add'} ${singularTitle}`}>
         <form onSubmit={save} className="grid gap-4 sm:grid-cols-2">
           {fields.map((field) => <label key={field.name} className={field.wide || field.type === 'textarea' || field.type === 'lines' ? 'sm:col-span-2' : ''}>
             {field.type === 'checkbox' ? <span className="flex items-center gap-2 rounded-xl border border-border px-3 py-2.5 text-sm"><input type="checkbox" checked={Boolean(form[field.name])} onChange={(event) => setForm({ ...form, [field.name]: event.target.checked })} />{field.label}</span> : <>

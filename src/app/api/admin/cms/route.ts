@@ -78,6 +78,36 @@ async function audit(userId: string, action: string, resource: string, resourceI
   await prisma.auditLog.create({ data: { userId, action, resource, resourceId } })
 }
 
+async function syncProfileSurfaces(data: Record<string, any>) {
+  const summary = data.professionalSummary || data.summary
+  if (summary !== undefined) {
+    const about = await prisma.aboutContent.findFirst()
+    if (about) await prisma.aboutContent.update({ where: { id: about.id }, data: { professionalSummary: summary } })
+    else await prisma.aboutContent.create({ data: { professionalSummary: summary } })
+  }
+
+  const contactData = Object.fromEntries(['email', 'phone', 'location'].filter((field) => field in data).map((field) => [field, data[field] || null]))
+  if (Object.keys(contactData).length) {
+    const contact = await prisma.contactContent.findFirst()
+    if (contact) await prisma.contactContent.update({ where: { id: contact.id }, data: contactData })
+    else await prisma.contactContent.create({ data: contactData })
+  }
+
+  const socialFields = [
+    ['LinkedIn', 'linkedinUrl'],
+    ['GitHub', 'githubUrl'],
+    ['WhatsApp', 'whatsappNumber'],
+  ] as const
+  for (const [platform, field] of socialFields) {
+    if (!(field in data)) continue
+    const rawUrl = String(data[field] || '').trim()
+    const url = platform === 'WhatsApp' && rawUrl ? `https://wa.me/${rawUrl.replace(/\D/g, '')}` : rawUrl
+    const existing = await prisma.socialLink.findFirst({ where: { platform: { equals: platform, mode: 'insensitive' } } })
+    if (existing) await prisma.socialLink.update({ where: { id: existing.id }, data: { url: url || existing.url, isActive: Boolean(url) } })
+    else if (url) await prisma.socialLink.create({ data: { platform, url, order: await prisma.socialLink.count() } })
+  }
+}
+
 export async function POST(req: NextRequest) {
   const session = await auth()
   if (!session?.user?.id) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
@@ -94,6 +124,7 @@ export async function POST(req: NextRequest) {
       const item = existing
         ? await delegate.update({ where: { id: existing.id }, data })
         : await delegate.create({ data })
+      if (resource === 'profile') await syncProfileSurfaces(data)
       await audit(session.user.id, existing ? 'UPDATE' : 'CREATE', resource, item.id)
       return NextResponse.json(item)
     }
@@ -108,6 +139,11 @@ export async function POST(req: NextRequest) {
     delete data.technologyNames
 
     if (resource === 'profileTitle' && !data.profileId) data.profileId = (await prisma.profile.findFirst())?.id
+    if (resource === 'skill' && !data.category) {
+      const group = data.skillGroupId ? await prisma.skillGroup.findUnique({ where: { id: data.skillGroupId } }) : null
+      const groupName = group?.name.toLowerCase() || ''
+      data.category = groupName.includes('language') ? 'LANGUAGE' : groupName.includes('soft') ? 'SOFT' : 'TECHNICAL'
+    }
     if (resource === 'aboutPoint' && !data.aboutId) {
       let about = await prisma.aboutContent.findFirst()
       if (!about) about = await prisma.aboutContent.create({ data: {} })
