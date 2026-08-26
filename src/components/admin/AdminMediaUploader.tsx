@@ -3,10 +3,21 @@
 import { useRef, useState } from 'react'
 import { Copy, File, Image as ImageIcon, Trash2, Upload } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { upload as uploadToBlob } from '@vercel/blob/client'
 
 export function AdminMediaUploader({ profile, assets: initialAssets = [] }: { profile: any; assets?: any[] }) {
   const [assets,setAssets]=useState(initialAssets); const [uploading,setUploading]=useState(false); const input=useRef<HTMLInputElement>(null)
-  const upload=async(file:File,type='asset')=>{setUploading(true);try{const data=new FormData();data.append('file',file);data.append('type',type);const response=await fetch('/api/admin/media',{method:'POST',body:data});const result=await response.json();if(!response.ok)throw new Error(result.message||'Upload failed');if(result.asset)setAssets((current)=>[result.asset,...current]);toast.success('Uploaded. Copy its URL to reuse it anywhere.')}catch(error){toast.error(error instanceof Error?error.message:'Upload failed')}finally{setUploading(false)}}
+  const upload=async(file:File,type='asset')=>{setUploading(true);try{let result:any
+    try {
+      const blob=await uploadToBlob(`portfolio/${type}/${file.name}`,file,{access:'public',handleUploadUrl:'/api/admin/media/upload',clientPayload:JSON.stringify({type}),multipart:file.size>4*1024*1024})
+      const response=await fetch('/api/admin/media',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:blob.url,name:file.name,mimeType:file.type,size:file.size,type})})
+      result=await response.json();if(!response.ok)throw new Error(result.message||'Unable to register uploaded file')
+    } catch (blobError) {
+      if (!['localhost','127.0.0.1'].includes(window.location.hostname)) throw blobError
+      const data=new FormData();data.append('file',file);data.append('type',type);const response=await fetch('/api/admin/media',{method:'POST',body:data});result=await response.json();if(!response.ok)throw new Error(result.message||'Upload failed')
+    }
+    if(result.asset)setAssets((current)=>[result.asset,...current]);toast.success('Uploaded. Copy its URL to reuse it anywhere.')
+  }catch(error){toast.error(error instanceof Error?error.message:'Upload failed')}finally{setUploading(false)}}
   const remove=async(asset:any)=>{if(!confirm(`Remove ${asset.name} from the library?`))return;const response=await fetch('/api/admin/media',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:asset.id})});if(response.ok)setAssets((current)=>current.filter((item)=>item.id!==asset.id))}
   const copy=(url:string)=>navigator.clipboard.writeText(url).then(()=>toast.success('URL copied'))
   return <section className="space-y-5"><div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"><div><h2 className="font-display text-2xl font-bold">Media Library</h2><p className="mt-1 text-sm text-muted-foreground">Upload images, certificates and CV files once, then reuse their URLs across CMS forms.</p></div><button onClick={()=>input.current?.click()} disabled={uploading} className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground"><Upload className="h-4 w-4"/>{uploading?'Uploading…':'Upload media'}</button><input ref={input} type="file" accept="image/*,.pdf,.doc,.docx" className="hidden" onChange={event=>event.target.files?.[0]&&upload(event.target.files[0])}/></div>
