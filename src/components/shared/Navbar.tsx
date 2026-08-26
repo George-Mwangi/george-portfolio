@@ -9,7 +9,7 @@ import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
 import type { SiteSectionSetting } from '@/lib/siteSections'
 
-export function Navbar({ profileName, sections, items = [] }: { profileName: string; sections?: SiteSectionSetting[]; items?: { id: string; label: string; url: string; newTab: boolean }[] }) {
+export function Navbar({ profileName, logoUrl, sections, items = [] }: { profileName: string; logoUrl?: string | null; sections?: SiteSectionSetting[]; items?: { id: string; label: string; url: string; newTab: boolean }[] }) {
   const [isOpen,   setIsOpen]   = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [mounted,  setMounted]  = useState(false)
@@ -41,8 +41,14 @@ export function Navbar({ profileName, sections, items = [] }: { profileName: str
       <nav className="section-container h-16 flex items-center justify-between gap-4" aria-label="Main navigation">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 font-display font-bold text-foreground hover:text-primary transition-colors shrink-0">
-          <span className="w-8 h-8 rounded-lg bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">{initials}</span>
-          <span className="hidden sm:inline text-sm font-semibold">{profileName}</span>
+          {logoUrl ? (
+            <img src={logoUrl} alt={`${profileName} logo`} className="h-11 w-auto max-w-[190px] rounded-md object-contain" />
+          ) : (
+            <>
+              <span className="w-8 h-8 rounded-lg bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">{initials}</span>
+              <span className="hidden sm:inline text-sm font-semibold">{profileName}</span>
+            </>
+          )}
         </Link>
 
         {/* Desktop nav */}

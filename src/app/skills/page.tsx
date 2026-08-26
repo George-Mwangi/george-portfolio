@@ -30,7 +30,7 @@ export default async function SkillsPage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
+      <Navbar profileName={profile?.name || 'Portfolio'} logoUrl={profile?.logoUrl} sections={sections} />
       <PageHero
         title={skillsEnabled && toolsEnabled ? 'Skills & Tools' : skillsEnabled ? 'Skills' : 'Tools'}
         subtitle="Capabilities built across years of professional experience"

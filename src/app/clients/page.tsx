@@ -31,7 +31,7 @@ export default async function ClientsPage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
+      <Navbar profileName={profile?.name || 'Portfolio'} logoUrl={profile?.logoUrl} sections={sections} />
       <PageHero
         title={clientsEnabled && testimonialsEnabled ? 'Clients & Testimonials' : clientsEnabled ? 'Clients' : 'Testimonials'}
         subtitle="Organisations I've served and what they say"

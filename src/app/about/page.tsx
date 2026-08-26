@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Learn about George Mwangi — IT professional based in Nakuru, Kenya.',
+  description: 'Learn about George Mwangi — IT professional based in Kenya.',
 }
 
 export default async function AboutPage() {
@@ -26,7 +26,7 @@ export default async function AboutPage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
+      <Navbar profileName={profile?.name || 'Portfolio'} logoUrl={profile?.logoUrl} sections={sections} />
       <PageHero title="About Me" subtitle="My story, values and what drives me" />
         <AboutSection profile={profile} about={about} />
       <Footer profile={profile} sections={sections} />

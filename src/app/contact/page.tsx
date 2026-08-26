@@ -25,7 +25,7 @@ export default async function ContactPage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
+      <Navbar profileName={profile?.name || 'Portfolio'} logoUrl={profile?.logoUrl} sections={sections} />
       <PageHero title="Contact" subtitle="Let's connect and explore opportunities together" />
       <ContactSection profile={profile} />
       <Footer profile={profile} sections={sections} />

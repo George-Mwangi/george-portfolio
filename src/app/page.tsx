@@ -71,5 +71,5 @@ export default async function HomePage() {
       case 'contact': return <ContactSection profile={d.profile} content={d.contact} socialLinks={d.socialLinks}/>
     }
   }
-  return <main className="relative min-h-screen"><ParticleBackground/><Navbar profileName={d.profile?.name || 'Portfolio'} sections={d.siteSections} items={d.navigation}/>{d.siteSections.filter((section)=>isSiteSectionEnabled(d.siteSections,section.id)).sort((a,b)=>a.order-b.order).map((section)=><div key={section.id} className="contents">{renderSection(section.id)}</div>)}<Footer profile={d.profile} sections={d.siteSections} items={d.navigation} socialLinks={d.socialLinks}/></main>
+  return <main className="relative min-h-screen"><ParticleBackground/><Navbar profileName={d.profile?.name || 'Portfolio'} logoUrl={d.profile?.logoUrl} sections={d.siteSections} items={d.navigation}/>{d.siteSections.filter((section)=>isSiteSectionEnabled(d.siteSections,section.id)).sort((a,b)=>a.order-b.order).map((section)=><div key={section.id} className="contents">{renderSection(section.id)}</div>)}<Footer profile={d.profile} sections={d.siteSections} items={d.navigation} socialLinks={d.socialLinks}/></main>
 }

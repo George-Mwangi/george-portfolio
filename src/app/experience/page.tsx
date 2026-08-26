@@ -26,7 +26,7 @@ export default async function ExperiencePage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
+      <Navbar profileName={profile?.name || 'Portfolio'} logoUrl={profile?.logoUrl} sections={sections} />
       <PageHero title="Work Experience" subtitle="A timeline of roles and responsibilities" />
       <ExperienceSection experiences={experiences} />
       <Footer profile={profile} sections={sections} />

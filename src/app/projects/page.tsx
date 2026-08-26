@@ -26,7 +26,7 @@ export default async function ProjectsPage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
+      <Navbar profileName={profile?.name || 'Portfolio'} logoUrl={profile?.logoUrl} sections={sections} />
       <PageHero title="Projects" subtitle="Highlighted work and key deliverables" />
       <ProjectsSection projects={projects} />
       <Footer profile={profile} sections={sections} />

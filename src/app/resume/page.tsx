@@ -25,7 +25,7 @@ export default async function ResumePage() {
   return (
     <main className="relative min-h-screen">
       <ParticleBackground />
-      <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
+      <Navbar profileName={profile?.name || 'Portfolio'} logoUrl={profile?.logoUrl} sections={sections} />
       <PageHero title="Resume / CV" subtitle="Download a full copy of my professional resume" />
       <ResumeSection cvUrl={profile?.cvUrl} />
       <Footer profile={profile} sections={sections} />
