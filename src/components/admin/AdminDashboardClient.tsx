@@ -52,6 +52,7 @@ export function AdminDashboardClient({ user, initialData: d }: { user: any; init
       { name:'email',label:'Email',type:'email',required:true }, { name:'phone',label:'Phone' }, { name:'location',label:'Location' }, { name:'whatsappNumber',label:'WhatsApp' },
       { name:'linkedinUrl',label:'LinkedIn',type:'url' }, { name:'githubUrl',label:'GitHub',type:'url' }, { name:'websiteUrl',label:'Website',type:'url' },
       { name:'availabilityText',label:'Availability badge' }, yesNo('availabilityActive','Show availability badge'), { name:'profileImageUrl',label:'Profile image URL',type:'url' },
+      { name:'logoUrl',label:'Logo URL',type:'url',wide:true },
       { name:'cvUrl',label:'Active CV URL',type:'url' }, { name:'cvFileName',label:'CV filename' }, yesNo('isPublished','Publish profile'),
     ]}/><AdminCmsEditor title="Secondary Titles" description="Add, edit, reorder and activate the titles rotated on the homepage." resource="profileTitle" items={d.profileTitles} displayField="title" statusField="isActive" fields={[{name:'title',label:'Title',required:true},yesNo('isPrimary','Primary title'),yesNo('isActive','Active')]}/></div>
     if (tab === 'hero') return <AdminSingletonEditor title="Hero" description="Control the homepage headline, description, calls to action, availability and image." resource="profile" value={d.profile} fields={[

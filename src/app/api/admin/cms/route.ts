@@ -20,7 +20,7 @@ const resources: Record<string, ResourceConfig> = {
 }
 
 const singletonFields: Record<string, string[]> = {
-  profile: ['name', 'mainTitle', 'heroDescription', 'professionalSummary', 'summary', 'email', 'phone', 'location', 'whatsappNumber', 'linkedinUrl', 'githubUrl', 'websiteUrl', 'availabilityText', 'availabilityActive', 'profileImageUrl', 'heroImageUrl', 'primaryCtaText', 'primaryCtaUrl', 'secondaryCtaText', 'secondaryCtaUrl', 'cvUrl', 'cvFileName', 'isPublished'],
+  profile: ['name', 'mainTitle', 'heroDescription', 'professionalSummary', 'summary', 'email', 'phone', 'location', 'whatsappNumber', 'linkedinUrl', 'githubUrl', 'websiteUrl', 'availabilityText', 'availabilityActive', 'profileImageUrl', 'heroImageUrl', 'logoUrl', 'primaryCtaText', 'primaryCtaUrl', 'secondaryCtaText', 'secondaryCtaUrl', 'cvUrl', 'cvFileName', 'isPublished'],
   aboutContent: ['sectionTitle', 'subtitle', 'introduction', 'professionalSummary', 'mission', 'ctaText', 'ctaUrl', 'isPublished'],
   contactContent: ['heading', 'description', 'email', 'phone', 'location', 'ctaText', 'ctaUrl', 'isPublished'],
   seoSettings: ['siteTitle', 'metaDescription', 'keywords', 'openGraphTitle', 'openGraphDescription', 'openGraphImage', 'faviconUrl', 'canonicalUrl'],
