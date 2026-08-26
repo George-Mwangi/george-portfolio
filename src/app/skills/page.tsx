@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default async function SkillsPage() {
   const [profile, skills, tools, sections] = await Promise.all([
     prisma.profile.findFirst({ where: { isPublished: true } }).catch(() => null),
-    prisma.skill.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }).catch(() => []),
+    prisma.skill.findMany({ where: { isPublished: true }, include: { skillGroup: true }, orderBy: { order: 'asc' } }).catch(() => []),
     prisma.tool.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }).catch(() => []),
     getSiteSections(),
   ])

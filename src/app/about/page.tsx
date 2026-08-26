@@ -17,8 +17,9 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
-  const [profile, sections] = await Promise.all([
+  const [profile, about, sections] = await Promise.all([
     prisma.profile.findFirst({ where: { isPublished: true } }).catch(() => null),
+    prisma.aboutContent.findFirst({ where: { isPublished: true }, include: { points: { where: { isActive: true }, orderBy: { order: 'asc' } } } }).catch(() => null),
     getSiteSections(),
   ])
   if (!isSiteSectionEnabled(sections, 'about')) notFound()
@@ -27,7 +28,7 @@ export default async function AboutPage() {
       <ParticleBackground />
       <Navbar profileName={profile?.name || 'Portfolio'} sections={sections} />
       <PageHero title="About Me" subtitle="My story, values and what drives me" />
-      <AboutSection profile={profile} />
+        <AboutSection profile={profile} about={about} />
       <Footer profile={profile} sections={sections} />
     </main>
   )

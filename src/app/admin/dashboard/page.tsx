@@ -14,18 +14,31 @@ export default async function AdminDashboardPage() {
   const [
     profile, experiences, education, skills, tools,
     certifications, projects, clients, messages, testimonials, siteSections,
+    profileTitles, aboutContent, achievements, services, skillGroups, socialLinks,
+    navigationItems, contactContent, seoSettings, resumes, mediaAssets,
   ] = await Promise.all([
     prisma.profile.findFirst(),
-    prisma.experience.findMany({ orderBy: { order: 'asc' } }),
+    prisma.experience.findMany({ orderBy: { order: 'asc' }, include: { details: { orderBy: { order: 'asc' } } } }),
     prisma.education.findMany({ orderBy: { order: 'asc' } }),
     prisma.skill.findMany({ orderBy: { order: 'asc' } }),
     prisma.tool.findMany({ orderBy: { order: 'asc' } }),
     prisma.certification.findMany({ orderBy: { order: 'asc' } }),
-    prisma.project.findMany({ orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }] }),
+    prisma.project.findMany({ orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }], include: { images: { orderBy: { order: 'asc' } }, technologies: { include: { skill: true }, orderBy: { order: 'asc' } } } }),
     prisma.client.findMany({ orderBy: { order: 'asc' } }),
     prisma.contactMessage.findMany({ orderBy: { createdAt: 'desc' }, take: 50 }),
     prisma.testimonial.findMany({ orderBy: { order: 'asc' } }),
     getSiteSections(),
+    prisma.profileTitle.findMany({ orderBy: { order: 'asc' } }),
+    prisma.aboutContent.findFirst({ include: { points: { orderBy: { order: 'asc' } } } }),
+    prisma.achievement.findMany({ orderBy: { order: 'asc' } }),
+    prisma.service.findMany({ orderBy: { order: 'asc' } }),
+    prisma.skillGroup.findMany({ orderBy: { order: 'asc' } }),
+    prisma.socialLink.findMany({ orderBy: { order: 'asc' } }),
+    prisma.navigationItem.findMany({ orderBy: { order: 'asc' } }),
+    prisma.contactContent.findFirst(),
+    prisma.seoSettings.findFirst(),
+    prisma.resume.findMany({ orderBy: { createdAt: 'desc' } }),
+    prisma.mediaAsset.findMany({ orderBy: { createdAt: 'desc' } }),
   ])
 
   const [totalMessages, unreadMessages, totalDownloads, pendingTestimonials] = await Promise.all([
@@ -50,6 +63,8 @@ export default async function AdminDashboardPage() {
         messages,
         testimonials,
         siteSections,
+        profileTitles, aboutContent, achievements, services, skillGroups, socialLinks,
+        navigationItems, contactContent, seoSettings, resumes, mediaAssets,
         stats: { totalMessages, unreadMessages, totalDownloads, pendingTestimonials },
       }}
     />

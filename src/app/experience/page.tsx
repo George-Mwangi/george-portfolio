@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default async function ExperiencePage() {
   const [profile, experiences, sections] = await Promise.all([
     prisma.profile.findFirst({ where: { isPublished: true } }).catch(() => null),
-    prisma.experience.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }).catch(() => []),
+    prisma.experience.findMany({ where: { isPublished: true }, include: { details: { orderBy: { order: 'asc' } } }, orderBy: { order: 'asc' } }).catch(() => []),
     getSiteSections(),
   ])
   if (!isSiteSectionEnabled(sections, 'experience')) notFound()

@@ -16,21 +16,31 @@ interface Profile {
   location?: string | null
   profileImageUrl?: string | null
   cvUrl?: string | null
+  mainTitle?: string | null
+  heroDescription?: string | null
+  availabilityText?: string | null
+  availabilityActive?: boolean
+  primaryCtaText?: string | null
+  primaryCtaUrl?: string | null
+  secondaryCtaText?: string | null
+  secondaryCtaUrl?: string | null
+  heroImageUrl?: string | null
+  titles?: { id: string; title: string; isActive: boolean; isPrimary: boolean; order: number }[]
 }
 
 export function HeroSection({ profile, enabledSections = [] }: { profile: Profile | null; enabledSections?: SiteSectionId[] }) {
   const [titleIndex, setTitleIndex] = useState(0)
 
-  const titles = profile?.title?.length
-    ? profile.title
-    : ['IT Professional', 'Cyber Security Specialist', 'Full Stack Web Developer ', 'Network & Systems Administrator']
+  const managedTitles = profile?.titles?.filter((item) => item.isActive).sort((a, b) => a.order - b.order).map((item) => item.title) || []
+  const titles = managedTitles.length ? managedTitles : (profile?.title?.length ? profile.title : [profile?.mainTitle || 'Professional Portfolio'])
 
   useEffect(() => {
     const id = setInterval(() => setTitleIndex((i) => (i + 1) % titles.length), 3000)
     return () => clearInterval(id)
   }, [titles.length])
 
-  const name = profile?.name || 'George Mwangi'
+  const name = profile?.name || 'Portfolio'
+  const heroImage = profile?.heroImageUrl || profile?.profileImageUrl
 
   return (
     <section
@@ -57,15 +67,15 @@ export function HeroSection({ profile, enabledSections = [] }: { profile: Profil
           <div className="text-center lg:text-left">
 
             {/* Badge */}
-            <motion.div
+            {profile?.availabilityActive && profile.availabilityText && <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/8 text-primary text-sm font-medium mb-8"
             >
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse-slow" />
-              Available for new opportunities
-            </motion.div>
+              {profile.availabilityText}
+            </motion.div>}
 
             {/* Name */}
             <motion.h1
@@ -76,6 +86,8 @@ export function HeroSection({ profile, enabledSections = [] }: { profile: Profil
             >
               {name}
             </motion.h1>
+
+            {profile?.mainTitle && <p className="mb-3 text-lg font-semibold text-foreground sm:text-xl">{profile.mainTitle}</p>}
 
             {/* Animated title */}
             <div className="h-12 flex items-center justify-center lg:justify-start mb-6" aria-live="polite">
@@ -127,11 +139,7 @@ export function HeroSection({ profile, enabledSections = [] }: { profile: Profil
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0"
               >
-                IT Professional, Cyber Security Specialist, and Full Stack Web Developer with
-                experience building secure web applications, managing IT infrastructure,
-                supporting enterprise systems, and delivering technology solutions that drive
-                business efficiency. Passionate about ethical hacking, automation, and solving
-                real-world challenges through innovative software.
+                {profile?.heroDescription || profile?.summary || ''}
               </motion.p>
 
             {/* CTA */}
@@ -141,7 +149,17 @@ export function HeroSection({ profile, enabledSections = [] }: { profile: Profil
               transition={{ duration: 0.5, delay: 0.4 }}
               className="flex flex-wrap gap-3 justify-center lg:justify-start"
             >
-              {enabledSections.includes('resume') && (profile?.cvUrl ? (
+              {profile?.primaryCtaText && profile.primaryCtaUrl && <Link
+                href={profile.primaryCtaUrl}
+                className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 hover:bg-primary/90"
+              >{profile.primaryCtaText}<ArrowRight className="h-4 w-4" /></Link>}
+
+              {profile?.secondaryCtaText && profile.secondaryCtaUrl && <Link
+                href={profile.secondaryCtaUrl}
+                className="inline-flex items-center gap-2 rounded-xl border border-border bg-card/60 px-6 py-3 font-medium text-foreground transition-all hover:scale-105 hover:border-primary/40"
+              >{profile.secondaryCtaText}</Link>}
+
+              {!profile?.primaryCtaText && enabledSections.includes('resume') && (profile?.cvUrl ? (
                 <a
                   href={profile.cvUrl}
                   download
@@ -160,7 +178,7 @@ export function HeroSection({ profile, enabledSections = [] }: { profile: Profil
                 </Link>
               ))}
 
-              {enabledSections.includes('contact') && <Link
+              {!profile?.secondaryCtaText && enabledSections.includes('contact') && <Link
                 href="#contact"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card/60 backdrop-blur text-foreground font-medium hover:border-primary/40 hover:bg-card transition-all hover:scale-105 active:scale-100"
               >
@@ -168,13 +186,6 @@ export function HeroSection({ profile, enabledSections = [] }: { profile: Profil
                 Contact Me
               </Link>}
 
-              {enabledSections.includes('contact') && <Link
-                href="#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-primary/25 bg-primary/8 text-primary font-medium hover:bg-primary/15 transition-all hover:scale-105 active:scale-100"
-              >
-                Hire Me
-                <ArrowRight className="w-4 h-4" />
-              </Link>}
             </motion.div>
           </div>
 
@@ -205,10 +216,10 @@ export function HeroSection({ profile, enabledSections = [] }: { profile: Profil
 
               {/* Avatar */}
               <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-2 border-primary/25 glass-card">
-                {profile?.profileImageUrl ? (
+                {heroImage ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={profile.profileImageUrl}
+                    src={heroImage}
                     alt={`${name} profile photo`}
                     className="w-full h-full object-cover"
                   />
@@ -225,25 +236,6 @@ export function HeroSection({ profile, enabledSections = [] }: { profile: Profil
                 )}
               </div>
 
-              {/* Float card: experience */}
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -left-6 top-1/4 glass-card rounded-2xl px-4 py-3 border border-primary/20 shadow-xl"
-              >
-                <p className="text-2xl font-display font-bold text-primary leading-none">5+</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Years Experience</p>
-              </motion.div>
-
-              {/* Float card: cert */}
-              <motion.div
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="absolute -right-4 bottom-1/4 glass-card rounded-2xl px-4 py-3 border border-primary/20 shadow-xl"
-              >
-                <p className="text-base font-display font-bold text-primary leading-none">IT</p>
-                <p className="text-xs text-muted-foreground mt-0.5">professional</p>
-              </motion.div>
             </div>
           </motion.div>
         </div>

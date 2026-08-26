@@ -4,8 +4,8 @@ import { prisma } from '@/lib/prisma'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 
-const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/x-icon']
-const MAX_SIZE = 5 * 1024 * 1024 // 5MB
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/x-icon', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+const MAX_SIZE = 10 * 1024 * 1024
 
 export async function POST(req: NextRequest) {
   const session = await auth()
@@ -30,7 +30,10 @@ export async function POST(req: NextRequest) {
 
     const url = `/uploads/${filename}`
 
-    // Update profile
+    const kind = file.type.startsWith('image/') ? (type === 'favicon' ? 'ICON' : 'IMAGE') : 'DOCUMENT'
+    const asset = await prisma.mediaAsset.create({ data: { name: file.name, url, kind, mimeType: file.type, size: file.size, altText: String(formData.get('altText') || '') || null } })
+
+    // Update profile for dedicated branding slots.
     const profile = await prisma.profile.findFirst()
     const updateData: Record<string, string> = {}
     if (type === 'profileImage') updateData.profileImageUrl = url
@@ -41,7 +44,7 @@ export async function POST(req: NextRequest) {
       await prisma.profile.update({ where: { id: profile.id }, data: updateData })
     }
 
-    return NextResponse.json({ url })
+    return NextResponse.json({ url, asset })
   } catch (err) {
     console.error('Media upload error:', err)
     return NextResponse.json({ message: 'Upload failed' }, { status: 500 })
@@ -52,7 +55,11 @@ export async function DELETE(req: NextRequest) {
   const session = await auth()
   if (!session?.user) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
 
-  const { type } = await req.json()
+  const { type, id } = await req.json()
+  if (id) {
+    await prisma.mediaAsset.delete({ where: { id } })
+    return NextResponse.json({ ok: true })
+  }
   const profile = await prisma.profile.findFirst()
   if (!profile) return NextResponse.json({ ok: true })
 

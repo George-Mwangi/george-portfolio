@@ -1,6 +1,8 @@
 export const SITE_SECTION_DEFINITIONS = [
   { id: 'hero', label: 'Hero', description: 'Professional introduction and primary calls to action.' },
   { id: 'about', label: 'About', description: 'Personal and professional overview.' },
+  { id: 'achievements', label: 'Achievements', description: 'Measurable professional outcomes.' },
+  { id: 'services', label: 'Services', description: 'Services and capabilities offered.' },
   { id: 'skills', label: 'Skills', description: 'Core expertise and capabilities.' },
   { id: 'projects', label: 'Projects', description: 'Selected work and project evidence.' },
   { id: 'clients', label: 'Clients', description: 'Organisations and clients served.' },

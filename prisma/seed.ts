@@ -1,242 +1,69 @@
-import { PrismaClient, SkillCategory, ToolCategory } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
 async function main() {
-  console.log('Seeding database...')
+  const password = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'Admin@2024!', 12)
+  await prisma.user.upsert({ where: { email: 'mwangig25@gmail.com' }, update: {}, create: { email: 'mwangig25@gmail.com', name: 'George Mwangi', password, role: 'ADMIN' } })
 
-  const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@2024!'
-  const hashedPassword = await bcrypt.hash(adminPassword, 12)
+  let profile = await prisma.profile.findFirst()
+  if (!profile) profile = await prisma.profile.create({ data: {
+    name: 'George Mwangi', title: ['Systems Administrator','Full-Stack Developer','Business Automation Specialist','IT Support Specialist','Cybersecurity Specialist'],
+    mainTitle: 'IT Systems & Software Solutions Specialist', heroDescription: 'I build, automate, and support the technology that keeps businesses running.',
+    summary: 'Results-driven IT professional with over five years of experience in software development, systems administration, IT support, enterprise business systems, and digital transformation.',
+    professionalSummary: 'Experienced in developing business applications, administering enterprise infrastructure, automating workflows, supporting networks, implementing business systems, and improving operational efficiency.',
+    email: 'mwangig25@gmail.com', phone: '+254706609056', whatsappNumber: '+254706609056', location: 'Nakuru, Kenya',
+    availabilityText: 'Available for new opportunities', primaryCtaText: 'View My Work', primaryCtaUrl: '#projects', secondaryCtaText: 'Hire Me', secondaryCtaUrl: '#contact', isPublished: true,
+  } })
+  else if (!profile.mainTitle) profile = await prisma.profile.update({ where: { id: profile.id }, data: {
+    mainTitle: 'IT Systems & Software Solutions Specialist',
+    heroDescription: profile.heroDescription || 'I build, automate, and support the technology that keeps businesses running.',
+    professionalSummary: profile.professionalSummary || profile.summary,
+    availabilityText: profile.availabilityText || 'Available for new opportunities',
+    primaryCtaText: profile.primaryCtaText || 'View My Work', primaryCtaUrl: profile.primaryCtaUrl || '#projects',
+    secondaryCtaText: profile.secondaryCtaText || 'Hire Me', secondaryCtaUrl: profile.secondaryCtaUrl || '#contact',
+  } })
 
-  await prisma.user.deleteMany()
-  await prisma.user.create({
-    data: {
-      email: 'mwangig25@gmail.com',
-      name: 'George Mwangi',
-      password: hashedPassword,
-      role: 'ADMIN',
-    },
-  })
-  console.log('Admin user created')
+  if (await prisma.profileTitle.count({ where: { profileId: profile.id } }) === 0) {
+    const titles = profile.title.length ? profile.title : ['Systems Administrator','Full-Stack Developer','Business Automation Specialist','IT Support Specialist','Cybersecurity Specialist']
+    await prisma.profileTitle.createMany({ data: titles.map((title, order) => ({ profileId: profile!.id, title, order, isPrimary: order === 0, isActive: true })) })
+  }
 
-  await prisma.profile.deleteMany()
-  await prisma.profile.create({
-  data: {
-    name: 'George Mwangi',
-    title: [
-      'Software Developer',
-      'System Administrator',
-      'IT Support Specialist',
-      'Cybersecurity Enthusiast',
-    ],
-    summary:
-      'Results-driven IT Professional with over five years of experience in software development, systems administration, IT support, enterprise business systems, and digital transformation. Experienced in developing business applications, administering enterprise infrastructure, automating workflows, supporting networks, implementing business systems, and improving operational efficiency. Passionate about cybersecurity, cloud technologies, and building modern software solutions.',
-    email: 'mwangig25@gmail.com',
-    phone: '+254706609056',
-    whatsappNumber: '+254706609056',
-    location: 'Nakuru, Kenya',
-    isPublished: true,
-  },
-})
-  console.log('Profile created')
+  let about = await prisma.aboutContent.findFirst()
+  if (!about) about = await prisma.aboutContent.create({ data: { sectionTitle: 'About Me', subtitle: 'IT systems, software and automation', introduction: 'I turn operational challenges into reliable technology solutions.', professionalSummary: profile.professionalSummary || profile.summary, mission: 'Build practical, secure technology that improves how organisations work.', ctaText: 'View My Experience', ctaUrl: '#experience' } })
 
-  await prisma.experience.deleteMany()
-  await prisma.experience.createMany({
-  data: [
-    {
-      company: 'Agventure Limited',
-      role: 'System Administrator | Systems Developer | IT Support Specialist',
-      startDate: new Date('2021-02-01'),
-      endDate: new Date('2025-09-30'),
-      isCurrent: false,
-      location: 'Nakuru, Kenya',
-      achievements: [
-        'Developed business applications using Knack and AppSheet',
-        'Administered Windows Servers and Microsoft 365',
-        'Managed company network infrastructure and firewalls',
-        'Supported Palladium Accounting System',
-        'Managed SmartB Weighbridge System',
-        'Implemented CCTV, biometric and alarm systems',
-        'Coordinated IT hardware procurement and maintenance',
-        'Provided organisation-wide technical support',
-        'Supported transport and logistics operations',
-      ],
-      order: 1,
-      isPublished: true,
-    },
-    {
-      company: 'FSD Africa',
-      role: 'Software Developer',
-      startDate: new Date('2020-09-01'),
-      endDate: new Date('2020-11-30'),
-      isCurrent: false,
-      location: 'Nairobi, Kenya',
-      achievements: [
-        'Developed Power Platform applications',
-        'Built workflow automation solutions',
-        'Contributed to ERP implementation',
-        'Created Power BI dashboards',
-        'Collaborated with international stakeholders',
-      ],
-      order: 2,
-      isPublished: true,
-    },
-    {
-      company: 'Joetrix Infotech',
-      role: 'IT Consultant & Software Developer',
-      startDate: new Date('2020-01-01'),
-      endDate: new Date('2020-08-31'),
-      isCurrent: false,
-      location: 'Nairobi, Kenya',
-      achievements: [
-        'Managed Microsoft 365 environments',
-        'Administered Windows Servers',
-        'Managed Azure Active Directory',
-        'Supported SharePoint deployments',
-        'Provided IT support and software development',
-      ],
-      order: 3,
-      isPublished: true,
-    },
-  ],
-})
-  console.log('Experience created')
+  const groups = [
+    ['Development','Software engineering and web technologies'],['Databases','Data storage and querying'],['Systems','Infrastructure and administration'],['Automation','Business process automation'],['Security','Security and network analysis'],
+  ] as const
+  for (const [order,[name,description]] of groups.entries()) await prisma.skillGroup.upsert({ where: { name }, update: {}, create: { name, description, order } })
+  const allGroups = await prisma.skillGroup.findMany()
+  const groupId = (name:string) => allGroups.find((group)=>group.name===name)?.id
+  const assignments: Record<string,string> = { Python:'Development',React:'Development','Node.js':'Development','SQL Databases':'Databases','System Administration':'Systems','Microsoft 365 Administration':'Systems','Network Administration':'Systems','Power Platform':'Automation',Cybersecurity:'Security','IT Support':'Systems' }
+  for (const [skillName,groupName] of Object.entries(assignments)) await prisma.skill.updateMany({ where: { name: skillName, skillGroupId: null }, data: { skillGroupId: groupId(groupName), proficiency: null } })
 
-  await prisma.education.deleteMany()
-  await prisma.education.createMany({
-  data: [
-    {
-      institution: 'Chuka University',
-      degree: 'Diploma',
-      field: 'Computer Science',
-      startDate: new Date('2017-01-01'),
-      endDate: new Date('2020-12-31'),
-      order: 1,
-      isPublished: true,
-    },
-    {
-      institution: 'CodeBrave',
-      degree: 'Cybersecurity Training',
-      field: 'Cybersecurity',
-      startDate: new Date('2021-01-01'),
-      endDate: new Date('2021-12-31'),
-      order: 2,
-      isPublished: true,
-    },
-    {
-      institution: 'Udemy',
-      degree: 'Certificate',
-      field: 'Web Development',
-      startDate: new Date('2020-01-01'),
-      endDate: new Date('2020-12-31'),
-      order: 3,
-      isPublished: true,
-    },
-  ],
-})
-  console.log('Education created')
+  if (await prisma.service.count() === 0) await prisma.service.createMany({ data: [
+    { title:'IT Systems & Infrastructure',description:'Administration and support for servers, networks, Microsoft 365 and business-critical infrastructure.',order:0 },
+    { title:'Business Automation',description:'Workflow and operational automation using practical low-code and custom software solutions.',order:1 },
+    { title:'Full-Stack Development',description:'Modern web applications and internal business systems built around real operational needs.',order:2 },
+    { title:'IT Support',description:'Responsive end-user, hardware, software and enterprise systems support.',order:3 },
+    { title:'Cybersecurity',description:'Security-conscious systems administration, assessment and infrastructure hardening.',order:4 },
+  ] })
 
-  await prisma.certification.deleteMany()
-  await prisma.certification.createMany({
-  data: [
-    {
-      name: 'International Computer Driving License (ICDL)',
-      issuer: 'ICDL',
-      order: 1,
-      isPublished: true,
-    },
-    {
-      name: 'Google Digital Skills',
-      issuer: 'Google',
-      order: 2,
-      isPublished: true,
-    },
-    {
-      name: 'Certificate in Web Development',
-      issuer: 'Udemy',
-      order: 3,
-      isPublished: true,
-    },
-    {
-      name: 'Cybersecurity Training',
-      issuer: 'CodeBrave',
-      order: 4,
-      isPublished: true,
-    },
-    {
-      name: 'TryHackMe Security Badges',
-      issuer: 'TryHackMe',
-      order: 5,
-      isPublished: true,
-    },
-  ],
-})
-  console.log('Certifications created')
+  if (await prisma.achievement.count() === 0) await prisma.achievement.create({ data: { title:'Years Experience',label:'Years Experience',value:'5',suffix:'+',description:'Professional experience across software, systems, support and automation.',order:0,isPublished:true } })
 
-  await prisma.skill.deleteMany()
-  await prisma.skill.createMany({
-  data: [
-    { name: 'Python', category: SkillCategory.CORE, proficiency: 90, order: 1, isPublished: true },
-    { name: 'React', category: SkillCategory.CORE, proficiency: 88, order: 2, isPublished: true },
-    { name: 'Node.js', category: SkillCategory.CORE, proficiency: 85, order: 3, isPublished: true },
-    { name: 'System Administration', category: SkillCategory.CORE, proficiency: 92, order: 4, isPublished: true },
-    { name: 'Microsoft 365 Administration', category: SkillCategory.CORE, proficiency: 90, order: 5, isPublished: true },
-    { name: 'Network Administration', category: SkillCategory.CORE, proficiency: 88, order: 6, isPublished: true },
-    { name: 'Cybersecurity', category: SkillCategory.CORE, proficiency: 80, order: 7, isPublished: true },
-    { name: 'SQL Databases', category: SkillCategory.CORE, proficiency: 88, order: 8, isPublished: true },
-    { name: 'Power Platform', category: SkillCategory.CORE, proficiency: 90, order: 9, isPublished: true },
-    { name: 'IT Support', category: SkillCategory.CORE, proficiency: 95, order: 10, isPublished: true },
-  ],
-})
-  console.log('Skills created')
+  for (const experience of await prisma.experience.findMany()) if (await prisma.experienceDetail.count({ where: { experienceId: experience.id } }) === 0 && experience.achievements.length) await prisma.experienceDetail.createMany({ data: experience.achievements.map((text,order)=>({ experienceId:experience.id,type:'RESPONSIBILITY',text,order })) })
 
-  await prisma.tool.deleteMany()
-  await prisma.tool.createMany({
-  data: [
-      { name: 'Python', category: ToolCategory.PROGRAMMING, order: 1, isPublished: true },
-      { name: 'React', category: ToolCategory.PROGRAMMING, order: 2, isPublished: true },
-      { name: 'Next.js', category: ToolCategory.PROGRAMMING, order: 3, isPublished: true },
-      { name: 'FastAPI', category: ToolCategory.PROGRAMMING, order: 4, isPublished: true },
-      { name: 'PostgreSQL', category: ToolCategory.DATABASE, order: 1, isPublished: true },
-      { name: 'Prisma', category: ToolCategory.DATABASE, order: 2, isPublished: true },
-      { name: 'Git', category: ToolCategory.DEVOPS, order: 1, isPublished: true },
-      { name: 'GitHub', category: ToolCategory.DEVOPS, order: 2, isPublished: true },
-      { name: 'Vercel', category: ToolCategory.DEVOPS, order: 3, isPublished: true },
-      { name: 'Microsoft 365', category: ToolCategory.CLOUD, order: 1, isPublished: true },
-      { name: 'Google Workspace', category: ToolCategory.CLOUD, order: 2, isPublished: true },
-      { name: 'Windows Server', category: ToolCategory.SYSTEMS, order: 1, isPublished: true },
-      { name: 'Active Directory', category: ToolCategory.SYSTEMS, order: 2, isPublished: true },
-      { name: 'SharePoint', category: ToolCategory.SYSTEMS, order: 3, isPublished: true },
-      { name: 'Power Apps', category: ToolCategory.PRODUCTIVITY, order: 1, isPublished: true },
-      { name: 'Power BI', category: ToolCategory.PRODUCTIVITY, order: 2, isPublished: true },
-      { name: 'Power Automate', category: ToolCategory.PRODUCTIVITY, order: 3, isPublished: true },
-      { name: 'Wireshark', category: ToolCategory.SECURITY, order: 1, isPublished: true },
-      { name: 'Nmap', category: ToolCategory.SECURITY, order: 2, isPublished: true },
-      { name: 'TryHackMe', category: ToolCategory.SECURITY, order: 3, isPublished: true },
-      { name: 'Teams', category: ToolCategory.COMMUNICATION, order: 1, isPublished: true },
-      { name: 'Slack', category: ToolCategory.COMMUNICATION, order: 2, isPublished: true },
-      { name: 'Zoom', category: ToolCategory.COMMUNICATION, order: 3, isPublished: true },
-      { name: 'Trello', category: ToolCategory.PROJECT_MANAGEMENT, order: 1, isPublished: true },
-      { name: 'ClickUp', category: ToolCategory.PROJECT_MANAGEMENT, order: 2, isPublished: true },
-      { name: 'Slack', category: ToolCategory.COMMUNICATION, order: 2, isPublished: true },
-      { name: 'Microsoft Teams', category: ToolCategory.COMMUNICATION, order: 3, isPublished: true },
-      { name: 'Google Meet', category: ToolCategory.COMMUNICATION, order: 4, isPublished: true },
-    ],
-  })
-  console.log('Tools created')
+  if (await prisma.navigationItem.count() === 0) await prisma.navigationItem.createMany({ data: [
+    ['Home','/'],['About','/#about'],['Services','/#services'],['Skills','/#skills'],['Experience','/#experience'],['Projects','/#projects'],['Certifications','/#certifications'],['Contact','/#contact'],
+  ].map(([label,url],order)=>({label,url,order,isVisible:true})) })
 
-  console.log('Seed complete')
-  console.log('Admin login:')
-  console.log('Email: mwangig25@gmail.com')
-  console.log(`Password: ${adminPassword}`)
+  if (await prisma.socialLink.count() === 0) {
+    const links = [['LinkedIn',profile.linkedinUrl],['GitHub',profile.githubUrl],['WhatsApp',profile.whatsappNumber ? `https://wa.me/${profile.whatsappNumber.replace(/\D/g,'')}` : null]].filter((entry): entry is [string,string]=>Boolean(entry[1]))
+    if (links.length) await prisma.socialLink.createMany({ data: links.map(([platform,url],order)=>({platform,url,order})) })
+  }
+  if (await prisma.contactContent.count() === 0) await prisma.contactContent.create({ data: { heading:"Let's work together",description:'Have an opportunity or a technology challenge? Send me a message.',email:profile.email,phone:profile.phone,location:profile.location } })
+  if (await prisma.seoSettings.count() === 0) await prisma.seoSettings.create({ data: { siteTitle:`${profile.name} | ${profile.mainTitle || 'Professional Portfolio'}`,metaDescription:profile.summary,keywords:[profile.name,'IT systems','business automation','full-stack development','IT support','Kenya'],canonicalUrl:process.env.NEXT_PUBLIC_SITE_URL } })
 }
 
-main()
-  .catch((error) => {
-    console.error(error)
-    process.exit(1)
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+main().catch((error)=>{console.error(error);process.exit(1)}).finally(()=>prisma.$disconnect())

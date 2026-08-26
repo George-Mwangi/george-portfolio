@@ -3,6 +3,8 @@ import { Navbar } from '@/components/shared/Navbar'
 import { Footer } from '@/components/shared/Footer'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { AboutSection } from '@/components/sections/AboutSection'
+import { AchievementsSection } from '@/components/sections/AchievementsSection'
+import { ServicesSection } from '@/components/sections/ServicesSection'
 import { SkillsSection } from '@/components/sections/SkillsSection'
 import { ExperienceSection } from '@/components/sections/ExperienceSection'
 import { EducationSection } from '@/components/sections/EducationSection'
@@ -20,364 +22,54 @@ import { isSiteSectionEnabled, type SiteSectionId } from '@/lib/siteSections'
 
 export const dynamic = 'force-dynamic'
 
-// ── Fallback seed data (used when DB is not yet connected) ─────────────────────
-const FALLBACK = {
-  profile: {
-  id: '1',
-  name: 'George Mwangi',
-  title: [
-    'IT Professional',
-    'Cyber Security Specialist',
-    'Full Stack Web Developer',
-    'Network & Systems Administrator'
-  ],
-
-  summary:
-    "I'm an IT Professional with experience in software development, cyber security, IT infrastructure, cloud technologies, networking, technical support, and business systems. I build secure, scalable web applications while helping organizations improve operational efficiency through technology. I'm passionate about ethical hacking, automation, and solving real-world business challenges.",
-
-  email: 'mwangig25@gmail.com',
-  phone: '+254706609056',
-  location: 'Nakuru, Kenya',
-
-  whatsappNumber: '+254706609056',
-
-  linkedinUrl: null,
-  githubUrl: 'https://github.com/George-Mwangi',
-  twitterUrl: null,
-
-  profileImageUrl: null,
-  faviconUrl: null,
-  logoUrl: null,
-  cvUrl: null,
-  cvFileName: null,
-
-  isPublished: true,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-},
-  experiences: [
-  {
-    id: '1',
-    company: 'Agventure Limited',
-    role: 'IT Specialist',
-
-    startDate: new Date('2021-02-09'),
-    endDate: new Date('2025-10-24'),
-    isCurrent: false,
-
-    location: 'Nakuru, Kenya',
-
-    description: null,
-
-    order: 1,
-    isPublished: true,
-
-    createdAt: new Date(),
-    updatedAt: new Date(),
-
-    achievements: [
-      'IT Support',
-      'Network Administration',
-      'Database Development',
-      'Knack Development',
-      'AppSheet Development',
-      'Palladium ERP Support',
-      'Google Workspace Administration',
-      'Hardware & Software Maintenance',
-      'Systems Troubleshooting',
-      'Technical Documentation'
-    ]
-  }
-],
-  education: [
-  {
-    id: '1',
-    institution: 'Chuka University',
-
-    degree: 'Diploma',
-
-    field: 'Computer Science',
-
-    startDate: new Date('2018-09-09'),
-    endDate: new Date('2020-12-18'),
-
-    isCurrent: false,
-
-    grade: null,
-    description: null,
-
-    order: 1,
-    isPublished: true,
-
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }
-],
-  certifications: [
-  {
-    id: '1',
-
-    name: 'Cyber Security Certification',
-
-    issuer: 'CodeBrave',
-
-    issueDate: new Date('2021-01-01'),
-
-    expiryDate: null,
-
-    credentialId: null,
-    credentialUrl: null,
-    imageUrl: null,
-
-    order: 1,
-    isPublished: true,
-
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }
-],
-  skills: [
-  {
-    id: '1',
-    name: 'Cyber Security',
-    category: 'CORE',
-    proficiency: 90,
-    order: 1,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '2',
-    name: 'Full Stack Development',
-    category: 'CORE',
-    proficiency: 92,
-    order: 2,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '3',
-    name: 'Python',
-    category: 'CORE',
-    proficiency: 90,
-    order: 3,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '4',
-    name: 'React & Next.js',
-    category: 'CORE',
-    proficiency: 90,
-    order: 4,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '5',
-    name: 'Networking',
-    category: 'CORE',
-    proficiency: 88,
-    order: 5,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '6',
-    name: 'Problem Solving',
-    category: 'SOFT',
-    proficiency: 95,
-    order: 1,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '7',
-    name: 'Communication',
-    category: 'SOFT',
-    proficiency: 90,
-    order: 2,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '8',
-    name: 'Project Management',
-    category: 'SOFT',
-    proficiency: 85,
-    order: 3,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-],
-  tools: [
-  {
-    id: '1',
-    name: 'React',
-    category: 'PROGRAMMING',
-    iconUrl: null,
-    order: 1,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '2',
-    name: 'Next.js',
-    category: 'PROGRAMMING',
-    iconUrl: null,
-    order: 2,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '3',
-    name: 'TypeScript',
-    category: 'PROGRAMMING',
-    iconUrl: null,
-    order: 3,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '4',
-    name: 'Python',
-    category: 'PROGRAMMING',
-    iconUrl: null,
-    order: 4,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '5',
-    name: 'FastAPI',
-    category: 'FRAMEWORK',
-    iconUrl: null,
-    order: 5,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '6',
-    name: 'PostgreSQL',
-    category: 'DATABASE',
-    iconUrl: null,
-    order: 6,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '7',
-    name: 'Docker',
-    category: 'DEVOPS',
-    iconUrl: null,
-    order: 7,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '8',
-    name: 'Git',
-    category: 'DEVOPS',
-    iconUrl: null,
-    order: 8,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '9',
-    name: 'Kali Linux',
-    category: 'CYBER_SECURITY',
-    iconUrl: null,
-    order: 9,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '10',
-    name: 'Wireshark',
-    category: 'CYBER_SECURITY',
-    iconUrl: null,
-    order: 10,
-    isPublished: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-],
-  projects: [],
-  clients: [],
-  testimonials: [],
-}
-
 async function getData() {
+  const siteSections = await getSiteSections()
   try {
-    const [profile, experiences, education, certifications, skills, tools, projects, clients, testimonials, siteSections] =
-      await Promise.all([
-        prisma.profile.findFirst({ where: { isPublished: true } }),
-        prisma.experience.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
-        prisma.education.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
-        prisma.certification.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
-        prisma.skill.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
-        prisma.tool.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
-        prisma.project.findMany({ where: { isPublished: true }, orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }] }),
-        prisma.client.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
-        prisma.testimonial.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
-        getSiteSections(),
-      ])
-    return { profile, experiences, education, certifications, skills, tools, projects, clients, testimonials, siteSections }
-  } catch {
-    return { ...FALLBACK, siteSections: await getSiteSections() }
+    const [profile, about, achievements, services, experiences, education, certifications, skills, tools, projects, clients, testimonials, navigation, socialLinks, contact, activeResume] = await Promise.all([
+      prisma.profile.findFirst({ where: { isPublished: true }, include: { titles: { where: { isActive: true }, orderBy: { order: 'asc' } } } }),
+      prisma.aboutContent.findFirst({ where: { isPublished: true }, include: { points: { where: { isActive: true }, orderBy: { order: 'asc' } } } }),
+      prisma.achievement.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
+      prisma.service.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } }),
+      prisma.experience.findMany({ where: { isPublished: true }, include: { details: { orderBy: { order: 'asc' } } }, orderBy: { order: 'asc' } }),
+      prisma.education.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
+      prisma.certification.findMany({ where: { isPublished: true }, orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }] }),
+      prisma.skill.findMany({ where: { isPublished: true, OR: [{ skillGroupId: null }, { skillGroup: { isActive: true } }] }, include: { skillGroup: true }, orderBy: { order: 'asc' } }),
+      prisma.tool.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
+      prisma.project.findMany({ where: { isPublished: true }, include: { images: { orderBy: { order: 'asc' } }, technologies: { include: { skill: true }, orderBy: { order: 'asc' } } }, orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }] }),
+      prisma.client.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
+      prisma.testimonial.findMany({ where: { isPublished: true }, orderBy: { order: 'asc' } }),
+      prisma.navigationItem.findMany({ where: { isVisible: true }, orderBy: { order: 'asc' } }),
+      prisma.socialLink.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } }),
+      prisma.contactContent.findFirst({ where: { isPublished: true } }),
+      prisma.resume.findFirst({ where: { isActive: true }, orderBy: { updatedAt: 'desc' } }),
+    ])
+    return { profile, about, achievements, services, experiences, education, certifications, skills, tools, projects, clients, testimonials, navigation, socialLinks, contact, activeResume, siteSections }
+  } catch (error) {
+    console.error('Portfolio content could not be loaded', error)
+    return { profile: null, about: null, achievements: [], services: [], experiences: [], education: [], certifications: [], skills: [], tools: [], projects: [], clients: [], testimonials: [], navigation: [], socialLinks: [], contact: null, activeResume: null, siteSections }
   }
 }
 
 export default async function HomePage() {
   const d = await getData()
-  const enabledSectionIds = d.siteSections.filter((section) => section.enabled).map((section) => section.id)
-
+  const enabled = d.siteSections.filter((section) => section.enabled).map((section) => section.id)
   const renderSection = (id: SiteSectionId) => {
     switch (id) {
-      case 'hero': return <HeroSection profile={d.profile} enabledSections={enabledSectionIds} />
-      case 'about': return <AboutSection profile={d.profile} />
-      case 'skills': return <Suspense fallback={null}><SkillsSection skills={d.skills} /></Suspense>
-      case 'experience': return <Suspense fallback={null}><ExperienceSection experiences={d.experiences} /></Suspense>
-      case 'education': return <Suspense fallback={null}><EducationSection education={d.education} /></Suspense>
-      case 'certifications': return <Suspense fallback={null}><CertificationsSection certifications={d.certifications} /></Suspense>
-      case 'tools': return <Suspense fallback={null}><ToolsSection tools={d.tools} /></Suspense>
-      case 'projects': return d.projects.length > 0 ? <Suspense fallback={null}><ProjectsSection projects={d.projects} /></Suspense> : null
-      case 'clients': return d.clients.length > 0 ? <Suspense fallback={null}><ClientsSection clients={d.clients} /></Suspense> : null
-      case 'testimonials': return d.testimonials.length > 0 ? <Suspense fallback={null}><TestimonialsSection testimonials={d.testimonials} /></Suspense> : null
-      case 'resume': return <ResumeSection cvUrl={d.profile?.cvUrl} />
-      case 'contact': return <ContactSection profile={d.profile} />
+      case 'hero': return <HeroSection profile={d.profile} enabledSections={enabled}/>
+      case 'about': return <AboutSection profile={d.profile} about={d.about}/>
+      case 'achievements': return <AchievementsSection achievements={d.achievements}/>
+      case 'services': return <ServicesSection services={d.services}/>
+      case 'skills': return <Suspense fallback={null}><SkillsSection skills={d.skills}/></Suspense>
+      case 'experience': return <ExperienceSection experiences={d.experiences}/>
+      case 'education': return <EducationSection education={d.education}/>
+      case 'certifications': return <CertificationsSection certifications={d.certifications}/>
+      case 'tools': return <ToolsSection tools={d.tools}/>
+      case 'projects': return <ProjectsSection projects={d.projects}/>
+      case 'clients': return <ClientsSection clients={d.clients}/>
+      case 'testimonials': return <TestimonialsSection testimonials={d.testimonials}/>
+      case 'resume': return <ResumeSection cvUrl={d.activeResume?.fileUrl || d.profile?.cvUrl}/>
+      case 'contact': return <ContactSection profile={d.profile} content={d.contact} socialLinks={d.socialLinks}/>
     }
   }
-
-  return (
-    <main className="relative min-h-screen">
-      <ParticleBackground />
-      <Navbar profileName={d.profile?.name || 'Portfolio'} sections={d.siteSections} />
-
-      {d.siteSections
-        .filter((section) => isSiteSectionEnabled(d.siteSections, section.id))
-        .sort((a, b) => a.order - b.order)
-        .map((section) => <div key={section.id} className="contents">{renderSection(section.id)}</div>)}
-
-      <Footer profile={d.profile} sections={d.siteSections} />
-    </main>
-  )
+  return <main className="relative min-h-screen"><ParticleBackground/><Navbar profileName={d.profile?.name || 'Portfolio'} sections={d.siteSections} items={d.navigation}/>{d.siteSections.filter((section)=>isSiteSectionEnabled(d.siteSections,section.id)).sort((a,b)=>a.order-b.order).map((section)=><div key={section.id} className="contents">{renderSection(section.id)}</div>)}<Footer profile={d.profile} sections={d.siteSections} items={d.navigation} socialLinks={d.socialLinks}/></main>
 }

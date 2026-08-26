@@ -11,11 +11,15 @@ interface Experience {
   id: string; company: string; role: string; startDate: Date
   endDate?: Date | null; isCurrent: boolean; location?: string | null
   description?: string | null; achievements: string[]
+  employmentType?: string | null; technologies?: string[]; systems?: string[]
+  details?: { id: string; type: 'RESPONSIBILITY'|'ACHIEVEMENT'; text: string; order: number }[]
 }
 
 function ExpCard({ exp, index }: { exp: Experience; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.15 })
+  const responsibilities = exp.details?.filter((item) => item.type === 'RESPONSIBILITY').map((item) => item.text) || exp.achievements || []
+  const outcomes = exp.details?.filter((item) => item.type === 'ACHIEVEMENT').map((item) => item.text) || []
 
   return (
     <div ref={ref} className="relative flex gap-6 pb-12 last:pb-0">
@@ -47,6 +51,7 @@ function ExpCard({ exp, index }: { exp: Experience; index: number }) {
               <h3 className="font-display font-semibold text-foreground text-lg leading-snug">{exp.role}</h3>
             </div>
             <p className="text-primary font-medium text-sm">{exp.company}</p>
+            {exp.employmentType && <p className="mt-1 text-xs text-muted-foreground">{exp.employmentType}</p>}
           </div>
           <div className="flex flex-col items-end gap-1">
             {exp.isCurrent && (
@@ -70,13 +75,13 @@ function ExpCard({ exp, index }: { exp: Experience; index: number }) {
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">{exp.description}</p>
         )}
 
-        {exp.achievements?.length > 0 && (
+        {responsibilities.length > 0 && (
           <>
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
               Key Responsibilities
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {exp.achievements.map((item, i) => (
+              {responsibilities.map((item, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -8 }}
@@ -91,6 +96,8 @@ function ExpCard({ exp, index }: { exp: Experience; index: number }) {
             </div>
           </>
         )}
+        {outcomes.length > 0 && <div className="mt-5 border-t border-border pt-4"><p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary">Key achievements</p><div className="space-y-2">{outcomes.map((item)=><div key={item} className="flex gap-2 text-sm text-muted-foreground"><CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary"/>{item}</div>)}</div></div>}
+        {[...(exp.technologies||[]),...(exp.systems||[])].length>0 && <div className="mt-5 flex flex-wrap gap-2">{[...(exp.technologies||[]),...(exp.systems||[])].map((item)=><span key={item} className="rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-xs text-primary">{item}</span>)}</div>}
       </motion.div>
     </div>
   )

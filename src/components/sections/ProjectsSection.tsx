@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic'
 
 import { useState } from 'react'
 import { motion } from 'motion/react'
-import { ExternalLink, FolderOpen, Star, Tag } from 'lucide-react'
+import { ExternalLink, FolderOpen, Github, Star, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface Project {
@@ -16,6 +16,14 @@ interface Project {
   tags: string[]
   client?: string | null
   isFeatured: boolean
+  githubUrl?: string | null
+  problem?: string | null
+  solution?: string | null
+  role?: string | null
+  features?: string[]
+  results?: string[]
+  images?: { id: string; url: string; altText?: string | null; isFeatured: boolean; order: number }[]
+  technologies?: { skill: { id: string; name: string } }[]
 }
 
 export function ProjectsSection({ projects }: { projects: Project[] }) {
@@ -61,6 +69,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {display.map((project, i) => (
+            (() => { const image = project.images?.find((item)=>item.isFeatured) || project.images?.[0]; const tags = project.technologies?.map((item)=>item.skill.name) || project.tags; return (
             <motion.div key={project.id}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ delay: i * 0.07 }}
@@ -68,9 +77,9 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
             >
               {/* Image or placeholder */}
               <div className="h-44 bg-gradient-to-br from-primary/10 to-primary/5 relative overflow-hidden">
-                {project.imageUrl ? (
+                {image?.url || project.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={image?.url || project.imageUrl || ''} alt={image?.altText || project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <FolderOpen className="w-12 h-12 text-primary/20" />
@@ -95,9 +104,11 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                 )}
                 <p className="text-muted-foreground text-sm leading-relaxed flex-1 line-clamp-3">{project.description}</p>
 
-                {project.tags.length > 0 && (
+                {project.results?.[0] && <p className="mt-3 border-l-2 border-primary pl-3 text-sm text-foreground">{project.results[0]}</p>}
+
+                {tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mt-3">
-                    {project.tags.slice(0, 4).map((tag) => (
+                    {tags.slice(0, 4).map((tag) => (
                       <span key={tag} className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-primary/8 text-primary border border-primary/15">
                         <Tag className="w-2.5 h-2.5" />{tag}
                       </span>
@@ -111,8 +122,9 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                     <ExternalLink className="w-3.5 h-3.5" /> View Project
                   </a>
                 )}
+                {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary"><Github className="h-3.5 w-3.5"/>Source code</a>}
               </div>
-            </motion.div>
+            </motion.div>) })()
           ))}
         </div>
       </div>

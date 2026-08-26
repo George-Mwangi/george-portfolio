@@ -27,7 +27,7 @@ interface Profile {
   whatsappNumber?: string | null
 }
 
-export function ContactSection({ profile }: { profile: Profile | null }) {
+export function ContactSection({ profile, content, socialLinks = [] }: { profile: Profile | null; content?: any; socialLinks?: any[] }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const {
@@ -66,19 +66,19 @@ export function ContactSection({ profile }: { profile: Profile | null }) {
     {
       icon: Mail,
       label: 'Email',
-      value: profile?.email || 'mwangig25@gmail.com',
-      href: `mailto:${profile?.email || 'mwangig25@gmail.com'}`,
+      value: content?.email || profile?.email || '',
+      href: `mailto:${content?.email || profile?.email || ''}`,
     },
     {
       icon: Phone,
       label: 'Phone',
-      value: profile?.phone || '+254 719 440 407',
-      href: `tel:${profile?.phone || '+254706609056'}`,
+      value: content?.phone || profile?.phone || '',
+      href: `tel:${content?.phone || profile?.phone || ''}`,
     },
     {
       icon: MapPin,
       label: 'Location',
-      value: profile?.location || 'Nakuru, Kenya',
+      value: content?.location || profile?.location || '',
       href: null,
     },
   ]
@@ -96,11 +96,10 @@ export function ContactSection({ profile }: { profile: Profile | null }) {
             Get in Touch
           </span>
           <h2 className="text-4xl lg:text-5xl font-display font-bold text-foreground mt-2 mb-4">
-            Contact Me
+            {content?.heading || 'Contact Me'}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Open to Web Development, Cyber Security and System Administration opportunities across the Globe.
-            Reach out and let's talk.
+            {content?.description || ''}
           </p>
         </motion.div>
 
@@ -138,8 +137,9 @@ export function ContactSection({ profile }: { profile: Profile | null }) {
             ))}
 
             {/* Social/quick links */}
-            <div className="flex gap-3">
-              {profile?.whatsappNumber && (
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map((link) => <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary"><ExternalLink className="h-4 w-4"/>{link.platform}</a>)}
+              {profile?.whatsappNumber && !socialLinks.some((link) => link.platform.toLowerCase() === 'whatsapp') && (
                 <a
                   href={`https://wa.me/${profile.whatsappNumber.replace(/\D/g, '')}`}
                   target="_blank"
@@ -150,7 +150,7 @@ export function ContactSection({ profile }: { profile: Profile | null }) {
                   WhatsApp
                 </a>
               )}
-              {profile?.linkedinUrl && (
+              {profile?.linkedinUrl && !socialLinks.some((link) => link.platform.toLowerCase() === 'linkedin') && (
                 <a
                   href={profile.linkedinUrl}
                   target="_blank"

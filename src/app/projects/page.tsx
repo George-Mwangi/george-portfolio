@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default async function ProjectsPage() {
   const [profile, projects, sections] = await Promise.all([
     prisma.profile.findFirst({ where: { isPublished: true } }).catch(() => null),
-    prisma.project.findMany({ where: { isPublished: true }, orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }] }).catch(() => []),
+    prisma.project.findMany({ where: { isPublished: true }, include: { images: { orderBy: { order: 'asc' } }, technologies: { include: { skill: true }, orderBy: { order: 'asc' } } }, orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }] }).catch(() => []),
     getSiteSections(),
   ])
   if (!isSiteSectionEnabled(sections, 'projects')) notFound()

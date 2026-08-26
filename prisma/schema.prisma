@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -20,43 +20,115 @@ model User {
 }
 
 model Profile {
-  id              String   @id @default(cuid())
-  name            String
-  title           String[]
-  summary         String
-  email           String
-  phone           String?
-  location        String?
-  linkedinUrl     String?
-  githubUrl       String?
-  twitterUrl      String?
-  whatsappNumber  String?
-  profileImageUrl String?
-  faviconUrl      String?
-  logoUrl         String?
-  cvUrl           String?
-  cvFileName      String?
-  isPublished     Boolean  @default(true)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                  String         @id @default(cuid())
+  name                String
+  title               String[]
+  summary             String
+  email               String
+  phone               String?
+  location            String?
+  linkedinUrl         String?
+  githubUrl           String?
+  twitterUrl          String?
+  whatsappNumber      String?
+  profileImageUrl     String?
+  faviconUrl          String?
+  logoUrl             String?
+  cvUrl               String?
+  cvFileName          String?
+  mainTitle           String?
+  heroDescription     String?
+  professionalSummary String?
+  websiteUrl          String?
+  availabilityText    String?
+  availabilityActive  Boolean        @default(true)
+  primaryCtaText      String?
+  primaryCtaUrl       String?
+  secondaryCtaText    String?
+  secondaryCtaUrl     String?
+  heroImageUrl        String?
+  titles              ProfileTitle[]
+  isPublished         Boolean        @default(true)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+}
+
+model ProfileTitle {
+  id        String   @id @default(cuid())
+  profileId String
+  title     String
+  isPrimary Boolean  @default(false)
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId, order])
+}
+
+model AboutContent {
+  id                  String       @id @default(cuid())
+  sectionTitle        String       @default("About Me")
+  subtitle            String?
+  introduction        String?
+  professionalSummary String?
+  mission             String?
+  ctaText             String?
+  ctaUrl              String?
+  isPublished         Boolean      @default(true)
+  points              AboutPoint[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+}
+
+model AboutPoint {
+  id        String       @id @default(cuid())
+  aboutId   String
+  text      String
+  order     Int          @default(0)
+  isActive  Boolean      @default(true)
+  about     AboutContent @relation(fields: [aboutId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([aboutId, order])
 }
 
 model Experience {
-  id           String    @id @default(cuid())
-  company      String
-  role         String
-  startDate    DateTime
-  endDate      DateTime?
-  isCurrent    Boolean   @default(false)
-  description  String?
-  achievements String[]
-  location     String?
-  order        Int       @default(0)
-  isPublished  Boolean   @default(true)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id             String             @id @default(cuid())
+  company        String
+  role           String
+  startDate      DateTime
+  endDate        DateTime?
+  isCurrent      Boolean            @default(false)
+  description    String?
+  achievements   String[]
+  location       String?
+  order          Int                @default(0)
+  isPublished    Boolean            @default(true)
+  employmentType String?
+  technologies   String[]           @default([])
+  systems        String[]           @default([])
+  isFeatured     Boolean            @default(false)
+  details        ExperienceDetail[]
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
 
   @@index([order])
+}
+
+model ExperienceDetail {
+  id           String               @id @default(cuid())
+  experienceId String
+  type         ExperienceDetailType
+  text         String
+  order        Int                  @default(0)
+  experience   Experience           @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+
+  @@index([experienceId, type, order])
 }
 
 model Education {
@@ -78,33 +150,53 @@ model Education {
 }
 
 model Certification {
-  id            String    @id @default(cuid())
-  name          String
-  issuer        String
-  issueDate     DateTime?
-  expiryDate    DateTime?
-  credentialId  String?
-  credentialUrl String?
-  imageUrl      String?
-  order         Int       @default(0)
-  isPublished   Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id                 String    @id @default(cuid())
+  name               String
+  issuer             String
+  issueDate          DateTime?
+  expiryDate         DateTime?
+  credentialId       String?
+  credentialUrl      String?
+  imageUrl           String?
+  certificateFileUrl String?
+  isFeatured         Boolean   @default(false)
+  order              Int       @default(0)
+  isPublished        Boolean   @default(true)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 
   @@index([order])
 }
 
 model Skill {
-  id          String        @id @default(cuid())
-  name        String
-  category    SkillCategory
-  proficiency Int           @default(80)
-  order       Int           @default(0)
-  isPublished Boolean       @default(true)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id           String              @id @default(cuid())
+  name         String
+  category     SkillCategory
+  proficiency  Int?
+  iconUrl      String?
+  evidence     String?
+  skillGroupId String?
+  skillGroup   SkillGroup?         @relation(fields: [skillGroupId], references: [id], onDelete: SetNull)
+  projects     ProjectTechnology[]
+  order        Int                 @default(0)
+  isPublished  Boolean             @default(true)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
 
   @@index([category])
+  @@index([order])
+}
+
+model SkillGroup {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  skills      Skill[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
   @@index([order])
 }
 
@@ -122,24 +214,57 @@ model Tool {
 }
 
 model Project {
-  id          String    @id @default(cuid())
-  title       String
-  description String
-  category    String?
-  imageUrl    String?
-  projectUrl  String?
-  tags        String[]
-  client      String?
-  startDate   DateTime?
-  endDate     DateTime?
-  isFeatured  Boolean   @default(false)
-  order       Int       @default(0)
-  isPublished Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id           String              @id @default(cuid())
+  title        String
+  description  String
+  category     String?
+  imageUrl     String?
+  projectUrl   String?
+  githubUrl    String?
+  problem      String?
+  solution     String?
+  role         String?
+  features     String[]            @default([])
+  results      String[]            @default([])
+  tags         String[]
+  client       String?
+  startDate    DateTime?
+  endDate      DateTime?
+  isFeatured   Boolean             @default(false)
+  order        Int                 @default(0)
+  isPublished  Boolean             @default(true)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  images       ProjectImage[]
+  technologies ProjectTechnology[]
 
   @@index([order])
   @@index([isFeatured])
+}
+
+model ProjectImage {
+  id         String   @id @default(cuid())
+  projectId  String
+  url        String
+  altText    String?
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([projectId, order])
+}
+
+model ProjectTechnology {
+  projectId String
+  skillId   String
+  order     Int     @default(0)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  skill     Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, skillId])
+  @@index([projectId, order])
 }
 
 model Client {
@@ -161,12 +286,99 @@ model Achievement {
   id          String    @id @default(cuid())
   title       String
   description String
+  value       String?
+  prefix      String?
+  suffix      String?
+  label       String?
   date        DateTime?
   icon        String?
   order       Int       @default(0)
   isPublished Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  icon        String?
+  iconUrl     String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([order])
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  platform  String
+  url       String
+  icon      String?
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+model NavigationItem {
+  id        String   @id @default(cuid())
+  label     String
+  url       String
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  newTab    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+model ContactContent {
+  id          String   @id @default(cuid())
+  heading     String   @default("Let's Work Together")
+  description String?
+  email       String?
+  phone       String?
+  location    String?
+  ctaText     String?
+  ctaUrl      String?
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SeoSettings {
+  id                   String   @id @default(cuid())
+  siteTitle            String
+  metaDescription      String
+  keywords             String[] @default([])
+  openGraphTitle       String?
+  openGraphDescription String?
+  openGraphImage       String?
+  faviconUrl           String?
+  canonicalUrl         String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model MediaAsset {
+  id        String    @id @default(cuid())
+  name      String
+  url       String
+  kind      MediaKind
+  mimeType  String?
+  size      Int?
+  altText   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([kind])
+  @@index([createdAt])
 }
 
 model Testimonial {
@@ -269,4 +481,16 @@ enum MessageStatus {
   READ
   REPLIED
   ARCHIVED
+}
+
+enum ExperienceDetailType {
+  RESPONSIBILITY
+  ACHIEVEMENT
+}
+
+enum MediaKind {
+  IMAGE
+  DOCUMENT
+  ICON
+  OTHER
 }
