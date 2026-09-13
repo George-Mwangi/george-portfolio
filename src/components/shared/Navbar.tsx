@@ -38,11 +38,11 @@ export function Navbar({ profileName, logoUrl, sections, items = [] }: { profile
         scrolled ? 'bg-background/85 backdrop-blur-xl border-b border-border/60 shadow-lg shadow-black/10' : 'bg-transparent'
       )}
     >
-      <nav className="section-container h-16 flex items-center justify-between gap-4" aria-label="Main navigation">
+      <nav className="section-container h-20 flex items-center justify-between gap-4" aria-label="Main navigation">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 font-display font-bold text-foreground hover:text-primary transition-colors shrink-0">
           {logoUrl ? (
-            <img src={logoUrl} alt={`${profileName} logo`} className="h-14 w-auto max-w-[230px] rounded-md object-contain drop-shadow-md" />
+            <img src={logoUrl} alt={`${profileName} logo`} className="h-16 w-auto max-w-[270px] rounded-md object-contain drop-shadow-lg" />
           ) : (
             <>
               <span className="w-8 h-8 rounded-lg bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">{initials}</span>
