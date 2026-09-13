@@ -42,7 +42,7 @@ export function Navbar({ profileName, logoUrl, sections, items = [] }: { profile
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 font-display font-bold text-foreground hover:text-primary transition-colors shrink-0">
           {logoUrl ? (
-            <img src={logoUrl} alt={`${profileName} logo`} className="h-11 w-auto max-w-[190px] rounded-md object-contain" />
+            <img src={logoUrl} alt={`${profileName} logo`} className="h-14 w-auto max-w-[230px] rounded-md object-contain drop-shadow-md" />
           ) : (
             <>
               <span className="w-8 h-8 rounded-lg bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">{initials}</span>
